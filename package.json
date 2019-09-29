@@ -1,0 +1,42 @@
+{
+  "name": "material",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@material/top-app-bar": "^3.2.0",
+    "axios": "^0.19.0",
+    "bootstrap": "^4.0.0",
+    "concurrently": "^4.1.2",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.15.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "react-file-base64": "^1.0.3",
+    "react-router-dom": "^5.0.1",
+    "react-scripts": "3.1.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "concurrently --kill-others \"react-scripts start\" \"npm run node-sass\"",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "node-sass": "node-sass --watch src -o src"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
