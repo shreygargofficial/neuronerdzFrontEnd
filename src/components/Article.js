@@ -7,7 +7,7 @@ export default class Article extends React.Component {
         err: ""
     }
     componentDidMount() {
-        axios.get(url + "getBlogByTitle/"+this.props.match.params.title).then(success => {
+        axios.get(url + "getBlogByUrl/"+this.props.match.params.titleUrl).then(success => {
             this.setState({ data: (success.data.data), er: "" })
         }).catch(err => {
             if (err.response) {

@@ -25,11 +25,14 @@ export default class CategoryList extends React.Component {
             this.state.data ?
                 this.state.data.map((ele, key) => {
                     return (
-                        <Link to={'/category/'+ele} key={key} >
+                        <React.Fragment  key={key}>
+                       
+                        <Link to={'/category/'+ele._id.toString().replace(/ /g,"-")} >
                             <div className="category-title-list text-capitalize text-secondary mb-2">
-                                {ele}
+                                {ele._id}&nbsp;&nbsp;&nbsp;({ele.totalBlog})
                             </div>
                         </Link>
+                        </React.Fragment>
                     )
                 })
                 : this.state.err

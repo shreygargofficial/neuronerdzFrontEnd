@@ -62,7 +62,7 @@ class App extends React.Component {
                     <Route exact path={'/page/:page'} component={Page} />
                     <Route exact path={'/search/:searchTag'} component={Search} />
                     <Route exact path={'/category/:category'} component={Category} />
-                    <Route exact path={'/:title'} component={Article} />
+                    <Route exact path={'/:titleUrl'} component={Article} />
                     <Route exact path={'/'} component={Home} />
                   </article>
                 }

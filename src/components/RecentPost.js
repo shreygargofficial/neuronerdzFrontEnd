@@ -27,7 +27,7 @@ export default class RecentPost extends React.Component {
             this.state.data ?
                 this.state.data.map((ele, key) => {
                     return (
-                        <Link to={'/'+ele.blogTitle} key={key} >
+                        <Link to={'/'+ele.blogUrl} key={key} >
                             <div className="post-title-list text-capitalize text-secondary mb-2">
                                 {ele.blogTitle}
                             </div>

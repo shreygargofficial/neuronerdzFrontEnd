@@ -10,7 +10,7 @@ export default class Category extends React.Component {
         err: ""
     }
     componentDidMount(prevProps) {
-        axios.get(url + "getBlogsByMainCategory/" + this.props.match.params.category).then(success => {
+        axios.get(url + "getBlogsByMainCategory/" + this.props.match.params.category.replace(/[-]/g," ")).then(success => {
             this.setState({ data: (success.data.data), err: "" })
         }).catch(err => {
             if (err.response) {

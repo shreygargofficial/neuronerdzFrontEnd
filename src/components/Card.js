@@ -8,7 +8,7 @@ export default class Card extends React.Component {
     render() {
         return (
             <div className="col-md-6  mb-4">
-                <Link to={'/'+this.props.ele.blogTitle}>
+                <Link to={'/'+this.props.ele.blogUrl}>
                     <div className="card card-hover">
                         <div className="card-header">
                             <img alt={this.props.ele.blogTitle} src={this.props.ele.blogImage} className="card-img-top" />
