@@ -17,7 +17,7 @@ import NavbarBottom from './components/NavbarBottom'
 import { urlR } from './components/url'
 import PostBlog from './components/PostBlog';
 import Admin from './components/Admin';
-// import mdc from './components/mdc';
+import SideNav from './components/sideNav';
 
 class App extends React.Component {
   state = {
@@ -64,29 +64,32 @@ class App extends React.Component {
                     </Switch>
                   </article>
                   {/* Search bar for non admin */}
-                    <article className="col-md-4">
-                      <div className="search-container">
-                        <input type="text" placeholder="search..." value={this.state.searchValue} onChange={this.searchChangeHandler} id="search" />
-                        <button className="bt bt-primary" onClick={this.searchSubmit}>search</button>
-                        {this.state.searchSubmitStatus && <Redirect to={'/search/' + this.state.searchValue} push />}
-                      </div>
-                      <div className="recent-post mt-4">
-                        <h2 className="">Recent Post</h2>
-                        <RecentPost />
-                      </div>
-                      <div className="categories mt-4">
-                        <h2 className="">Categories</h2>
-                        <CategoryList />
-                      </div>
-
-                    </article>
+                  <article className="col-md-4">
+                    <div className="search-container">
+                      <input type="text" placeholder="search..." value={this.state.searchValue} onChange={this.searchChangeHandler} id="search" />
+                      <button className="bt bt-primary" onClick={this.searchSubmit}>search</button>
+                      {this.state.searchSubmitStatus && <Redirect to={'/search/' + this.state.searchValue} push />}
+                    </div>
+                    <div className="recent-post mt-4">
+                      <h2 className="">Recent Post</h2>
+                      <RecentPost />
+                    </div>
+                    <div className="categories mt-4">
+                      <h2 className="">Categories</h2>
+                      <CategoryList />
+                    </div>
+                  </article>
                 </section>
               </main>
             </React.Fragment> : (
-              <Switch>
-                <Route exact path={'/admin'} component={Admin} />
-                <Route exact path={'/admin/login'} component={Login} />
-              </Switch>
+              <React.Fragment>
+                {!window.location.pathname.match(/\/admin\/login/) ?
+                <SideNav />:""}
+                <Switch>
+                  <Route exact path={'/admin'} component={Admin} />
+                  <Route exact path={'/admin/login'} component={Login} />
+                </Switch>
+              </React.Fragment>
             )
           }
         </BrowserRouter>
