@@ -1,3 +1,6 @@
+.text-white {
+  color: #fff; }
+
 .navbar-top {
   background-color: #AF0017;
   font-size: 12px;
@@ -102,6 +105,32 @@ img {
 
 a:hover {
   color: inherit; }
+
+.form-login {
+  border: 1px solid #dedede;
+  padding: 30px;
+  margin-top: 100px;
+  border-radius: 3px; }
+
+.form-login .form-login-heading {
+  text-align: center;
+  margin: 20px 0; }
+
+.form-login .mdc-text-field {
+  height: 45px; }
+
+.form-login .form-login-userlogo {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+  margin-top: -80px;
+  border-radius: 50%;
+  border: 1px solid #dedede;
+  position: relative;
+  z-index: 100;
+  background: #fff;
+  text-align: center;
+  padding-top: 30px; }
 
 @media screen and (max-width: 400px) {
   .navbar-navigations {

@@ -4,7 +4,9 @@ $border-color:#d9d8d8;
 $pad-0:0px;
 $border:1px solid red;
 
-
+.text-white{
+    color: #fff;
+}
 .navbar-top{
     background-color: $primary;
     font-size:12px;
@@ -137,6 +139,34 @@ img{
   }
 a:hover{
     color: inherit;
+}
+.form-login{
+    border: 1px solid #dedede;
+    padding: 30px;
+    margin-top: 100px;
+    border-radius: 3px;
+    .form-login-heading{
+        text-align: center;
+        margin: 20px 0;
+    
+    }
+    .mdc-text-field{
+        height: 45px;   
+    }
+    .form-login-userlogo{
+        width: 100px;
+        height: 100px; 
+        margin:0 auto;
+        margin-top: -80px;
+        border-radius: 50%; 
+        border: 1px solid #dedede;
+       position: relative;
+       z-index: 100;
+       background: #fff;
+       text-align: center;
+       padding-top: 30px;
+    }
+    
 }
 
 @media screen and (max-width : 400px){

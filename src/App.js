@@ -15,6 +15,9 @@ import Team from './components/Team'
 import NavbarTop from './components/NavbarTop'
 import NavbarBottom from './components/NavbarBottom'
 import { urlR } from './components/url'
+import PostBlog from './components/PostBlog';
+// import mdc from './components/mdc';
+
 class App extends React.Component {
   state = {
     searchValue: "",
@@ -62,6 +65,8 @@ class App extends React.Component {
                     <Route exact path={'/page/:page'} component={Page} />
                     <Route exact path={'/search/:searchTag'} component={Search} />
                     <Route exact path={'/category/:category'} component={Category} />
+                    <Route exact path={'/post'} component={PostBlog} />
+                    {/* <Route exact path={'/mdc'} component={mdc} /> */}
                     <Route exact path={'/:titleUrl'} component={Article} />
                     <Route exact path={'/'} component={Home} />
                   </article>
