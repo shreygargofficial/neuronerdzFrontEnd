@@ -80,8 +80,13 @@ img {
   margin-top: 15px;
   margin-bottom: 15px; }
 
-.tags span {
-  display: initial; }
+.blog-data .tags span {
+  display: initial;
+  float: left;
+  margin-left: 1px; }
+
+.blog-data .card {
+  clear: both; }
 
 .recent-post .post-title-list {
   margin-left: 18px; }

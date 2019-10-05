@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-
+import url from './url'
 export default class Login extends React.Component {
 
     state = {
@@ -43,12 +43,13 @@ export default class Login extends React.Component {
                     formValid.userPassword = true;
                 }
                 break;
-
+            default:
+                break;
         }
     }
     submitHandler=(e)=>{
         e.preventDefault();
-        axios.post("http://localhost:4000/loginUser",this.state.form).then(success=>{
+        axios.post(url+"loginUser",this.state.form).then(success=>{
             console.log(success)
            this.setState({success:success.data.data,err:""})
         }).catch(err=>{

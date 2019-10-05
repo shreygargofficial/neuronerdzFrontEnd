@@ -11,7 +11,7 @@ export default class About extends React.Component {
                 <div className="entry-content">
                     <br />
                     <p>
-                        <img className="" src="../images/aboutcollage.jpg" data-lazy-type="image" data-src="http://www.neuronerdz.com/wp-content/uploads/2019/09/Capture1-300x168.jpg" alt="" width="772" height="433" srcset="" data-srcset="https://www.neuronerdz.com/wp-content/uploads/2019/09/Capture1-300x168.jpg 300w, https://www.neuronerdz.com/wp-content/uploads/2019/09/Capture1-200x112.jpg 200w, https://www.neuronerdz.com/wp-content/uploads/2019/09/Capture1-768x430.jpg 768w, https://www.neuronerdz.com/wp-content/uploads/2019/09/Capture1-1024x573.jpg 1024w, https://www.neuronerdz.com/wp-content/uploads/2019/09/Capture1.jpg 1585w" sizes="(max-width: 772px) 100vw, 772px" />
+                        <img className="" src="../images/aboutcollage.jpg" data-lazy-type="image" data-src="http://www.neuronerdz.com/wp-content/uploads/2019/09/Capture1-300x168.jpg" alt="" width="772" height="433" srcSet="" data-srcset="https://www.neuronerdz.com/wp-content/uploads/2019/09/Capture1-300x168.jpg 300w, https://www.neuronerdz.com/wp-content/uploads/2019/09/Capture1-200x112.jpg 200w, https://www.neuronerdz.com/wp-content/uploads/2019/09/Capture1-768x430.jpg 768w, https://www.neuronerdz.com/wp-content/uploads/2019/09/Capture1-1024x573.jpg 1024w, https://www.neuronerdz.com/wp-content/uploads/2019/09/Capture1.jpg 1585w" sizes="(max-width: 772px) 100vw, 772px" />
                         <noscript>
                             <img className="wp-image-6185 aligncenter" src="http://www.neuronerdz.com/wp-content/uploads/2019/09/Capture1-300x168.jpg" alt="" width="772" height="433" srcset="https://www.neuronerdz.com/wp-content/uploads/2019/09/Capture1-300x168.jpg 300w, https://www.neuronerdz.com/wp-content/uploads/2019/09/Capture1-200x112.jpg 200w, https://www.neuronerdz.com/wp-content/uploads/2019/09/Capture1-768x430.jpg 768w, https://www.neuronerdz.com/wp-content/uploads/2019/09/Capture1-1024x573.jpg 1024w, https://www.neuronerdz.com/wp-content/uploads/2019/09/Capture1.jpg 1585w" sizes="(max-width: 772px) 100vw, 772px" />
                         </noscript>
@@ -35,7 +35,7 @@ export default class About extends React.Component {
                         <div className="join-head" >Want To Work With Us?</div>
                         {/* style="color: #91bbde; font-size: 50px; font-family: tamoha; margin-top: 120px; margin-left: 44px; line-height: 50px;" */}
                         <p>
-                            <a href="https://tiny.cc/team-nn"><button classNameName="buttn" >Join Us</button><br />
+                            <a href="https://tiny.cc/team-nn"><button className="buttn" >Join Us</button><br />
                                 {/* style="margin-top: 30px; margin-left: 25%; text-aligh: center; position: relative; display: block; float: none; padding: 15px 40px; border-radius: 8px; color: white; background: rgba(0,0,0,0.5); border: none;" */}
                             </a>
                         </p>

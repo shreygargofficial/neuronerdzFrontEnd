@@ -8,13 +8,13 @@ export default class Article extends React.Component {
     }
     componentDidMount() {
         axios.get(url + "getBlogByUrl/"+this.props.match.params.titleUrl).then(success => {
-            this.setState({ data: (success.data.data), er: "" })
+            this.setState({ data: (success.data.data), err: "" })
         }).catch(err => {
             if (err.response) {
-                this.setState({ data: "", er: err.response.data.message })
+                this.setState({ data: "", err: err.response.data.message })
             }
             else {
-                this.setState({ data: "", er: err.message })
+                this.setState({ data: "", err: err.message })
             }
         })
     }
@@ -51,7 +51,8 @@ export default class Article extends React.Component {
                             </div>
                         </div>
 
-                    </React.Fragment>) : this.state.err}
+                    </React.Fragment>) : <h2>{this.state.err}</h2>}
+                 
             </div>
         )
     }

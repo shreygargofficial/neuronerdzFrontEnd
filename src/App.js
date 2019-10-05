@@ -16,6 +16,7 @@ import NavbarTop from './components/NavbarTop'
 import NavbarBottom from './components/NavbarBottom'
 import { urlR } from './components/url'
 import PostBlog from './components/PostBlog';
+import Admin from './components/Admin';
 // import mdc from './components/mdc';
 
 class App extends React.Component {
@@ -29,78 +30,67 @@ class App extends React.Component {
   searchSubmit = () => {
     this.setState({ searchSubmitStatus: true })
   }
-  componentWillUnmount() {
-    console.log("hellos")
-    // this.setState({searchSubmitStatus:false})
-  }
+
   render() {
 
     return (
       <React.Fragment>
         <BrowserRouter>
-          {!window.location.pathname.match(/\/admin.*/) &&
-            <NavbarTop />
-          }
-          <main className="container">
-
-            {!window.location.pathname.match(/\/admin.*/) &&
-              <React.Fragment>
+          {!window.location.pathname.match(/\/admin.*/) ?
+            <React.Fragment>
+              <NavbarTop />
+              <main className="container">
+                {/* Logo */}
                 <div className="neuronerdz-logo">
                   <img src={urlR + "images/logoMain.png"} alt="Neuronerdz" />
                   <h6>Neuronerdz</h6>
                 </div>
+                {/* Navbar bootom */}
                 <NavbarBottom />
-              </React.Fragment>
-            }
-
-            <section className="row">
-              <Switch>
-                {!window.location.pathname.match(/\/admin.*/) &&
+                <section className="row">
                   <article className="col-md-8 ">
-                    <Route exact path={'/contact'} component={Contact} />
-                    <Route exact path={'/about'} component={About} />
-                    <Route exact path={'/home'} render={() => <Redirect to="/" push />} />
-                    <Route exact path={'/team'} component={Team} />
-                    <Route exact path={'/blog'} component={Blog} />
-                    <Route exact path={'/page/:page'} component={Page} />
-                    <Route exact path={'/search/:searchTag'} component={Search} />
-                    <Route exact path={'/category/:category'} component={Category} />
-                    <Route exact path={'/post'} component={PostBlog} />
-                    {/* <Route exact path={'/mdc'} component={mdc} /> */}
-                    <Route exact path={'/:titleUrl'} component={Article} />
-                    <Route exact path={'/'} component={Home} />
+                    <Switch>
+                      <Route exact path={'/contact'} component={Contact} />
+                      <Route exact path={'/about'} component={About} />
+                      <Route exact path={'/home'} render={() => <Redirect to="/" push />} />
+                      <Route exact path={'/team'} component={Team} />
+                      <Route exact path={'/blog'} component={Blog} />
+                      <Route exact path={'/page/:page'} component={Page} />
+                      <Route exact path={'/search/:searchTag'} component={Search} />
+                      <Route exact path={'/category/:category'} component={Category} />
+                      <Route exact path={'/post'} component={PostBlog} />
+                      <Route exact path={'/:titleUrl'} component={Article} />
+                      <Route exact path={'/'} component={Home} />
+                    </Switch>
                   </article>
-                }
-                <Route exact path={'/admin'} component={Login} />
+                  {/* Search bar for non admin */}
+                    <article className="col-md-4">
+                      <div className="search-container">
+                        <input type="text" placeholder="search..." value={this.state.searchValue} onChange={this.searchChangeHandler} id="search" />
+                        <button className="bt bt-primary" onClick={this.searchSubmit}>search</button>
+                        {this.state.searchSubmitStatus && <Redirect to={'/search/' + this.state.searchValue} push />}
+                      </div>
+                      <div className="recent-post mt-4">
+                        <h2 className="">Recent Post</h2>
+                        <RecentPost />
+                      </div>
+                      <div className="categories mt-4">
+                        <h2 className="">Categories</h2>
+                        <CategoryList />
+                      </div>
+
+                    </article>
+                </section>
+              </main>
+            </React.Fragment> : (
+              <Switch>
+                <Route exact path={'/admin'} component={Admin} />
+                <Route exact path={'/admin/login'} component={Login} />
               </Switch>
-
-              {!window.location.pathname.match(/\/admin.*/) &&
-                <article className="col-md-4">
-                  <div className="search-container">
-                    <input type="text" placeholder="search..." value={this.state.searchValue} onChange={this.searchChangeHandler} id="search" />
-                    <button className="bt bt-primary" onClick={this.searchSubmit}>search</button>
-                    {this.state.searchSubmitStatus && <Redirect to={'/search/' + this.state.searchValue} push />}
-                  </div>
-                  <div className="recent-post mt-4">
-                    <h2 className="">Recent Post</h2>
-                    <RecentPost />
-                  </div>
-                  <div className="categories mt-4">
-                    <h2 className="">Categories</h2>
-                    <CategoryList />
-                  </div>
-                 
-                </article>
-              }
-            </section>
-          </main>
-
-
+            )
+          }
         </BrowserRouter>
-
-
-      </React.Fragment>
-
+      </React.Fragment >
     );
   }
 }
