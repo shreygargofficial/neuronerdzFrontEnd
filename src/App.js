@@ -30,7 +30,7 @@ class App extends React.Component {
     searchSubmitStatus: false
   }
   searchChangeHandler = (e) => {
-    this.setState({ searchValue: e.target.value,searchSubmitStatus:false })
+    this.setState({ searchValue: e.target.value, searchSubmitStatus: false })
   }
   searchSubmit = () => {
     this.setState({ searchSubmitStatus: true })
@@ -41,53 +41,8 @@ class App extends React.Component {
     return (
       <React.Fragment>
         <BrowserRouter>
-          {!window.location.pathname.match(/\/admin.*/) ?
-            <React.Fragment>
-              <NavbarTop />
-              <main className="container">
-                {/* Logo */}
-                <div className="neuronerdz-logo">
-                  <img src={urlR + "images/logoMain.png"} alt="Neuronerdz" />
-                  <h6>Neuronerdz</h6>
-                </div>
-                {/* Navbar bootom */}
-                <NavbarBottom />
-                <section className="row">
-                  <article className="col-md-8 ">
-                    <Switch>
-                      <Route exact path={'/contact'} component={Contact} />
-                      <Route exact path={'/admin/*'} render={()=>this.setState({})} />
-                      <Route exact path={'/about'} component={About} />
-                      <Route exact path={'/home'} render={() => <Redirect to="/" push />} />
-                      <Route exact path={'/team'} component={Team} />
-                      <Route exact path={'/blog'} component={Blog} />
-                      <Route exact path={'/page/:page'} component={Page} />
-                      <Route exact path={'/search/:searchTag'} component={Search} />
-                      <Route exact path={'/category/:category'} component={Category} />
-                      <Route exact path={'/post'} component={PostBlog} />
-                      <Route exact path={'/:titleUrl'} component={Article} />
-                      <Route exact path={'/'} component={Home} />
-                    </Switch>
-                  </article>
-                  {/* Search bar for non admin */}
-                  <article className="col-md-4">
-                    <div className="search-container">
-                      <input type="text" placeholder="search..." value={this.state.searchValue} onChange={this.searchChangeHandler} id="search" />
-                      <button className="bt bt-primary" onClick={this.searchSubmit}>search</button>
-                      {this.state.searchSubmitStatus && <Redirect to={'/search/' + this.state.searchValue} push />}
-                    </div>
-                    <div className="recent-post mt-4">
-                      <h2 className="">Recent Post</h2>
-                      <RecentPost />
-                    </div>
-                    <div className="categories mt-4">
-                      <h2 className="">Categories</h2>
-                      <CategoryList />
-                    </div>
-                  </article>
-                </section>
-              </main>
-            </React.Fragment> : (
+          {window.location.pathname.match(/\/admin.*/) ?
+            (
               <React.Fragment>
                 <Switch>
                   <Route exact path={'/admin'} component={Admin} />
@@ -96,15 +51,78 @@ class App extends React.Component {
                   <Route exact path={'/admin/comment'} component={AdminComment} />
                   <Route exact path={'/admin/user'} component={AdminUser} />
                   <Route exact path={'/admin/user/:username'} component={User} />
-                  <Route exact path={'/'} render={()=>this.setState({})} />
-                  
-                
-                  
-
-                  
+                  <Route exact path={'/'} render={() => this.setState({})} />
                 </Switch>
               </React.Fragment>
-            )
+            ) : window.location.pathname.match(/\/.+/) ?
+              (
+                <React.Fragment>
+                  <NavbarTop />
+                  <main className="container">
+                    {/* Logo */}
+                    <div className="neuronerdz-logo">
+                      <img src={urlR + "images/logoMain.png"} alt="Neuronerdz" />
+                      <h6>Neuronerdz</h6>
+                    </div>
+                    {/* Navbar bootom */}
+                    <NavbarBottom />
+                    <section className="row">
+                      <article className="col-md-8 ">
+                        <Switch>
+                          <Route exact path={'/contact'} component={Contact} />
+                          <Route exact path={'/admin/*'} render={() => this.setState({})} />
+                          <Route exact path={'/about'} component={About} />
+                          <Route exact path={'/home'} render={() => <Redirect to="/" push />} />
+                          <Route exact path={'/team'} component={Team} />
+                          <Route exact path={'/blog'} component={Blog} />
+                          <Route exact path={'/page/:page'} component={Page} />
+                          <Route exact path={'/search/:searchTag'} component={Search} />
+                          <Route exact path={'/category/:category'} component={Category} />
+                          <Route exact path={'/post'} component={PostBlog} />
+                          <Route exact path={'/:titleUrl'} component={Article} />
+                          <Route exact path={'/'} render={() => this.setState({})} />
+                        </Switch>
+                      </article>
+                      {/* Search bar for non admin */}
+                      <article className="col-md-4">
+                        <div className="search-container">
+                          <input type="text" placeholder="search..." value={this.state.searchValue} onChange={this.searchChangeHandler} id="search" />
+                          <button className="bt bt-primary" onClick={this.searchSubmit}>search</button>
+                          {this.state.searchSubmitStatus && <Redirect to={'/search/' + this.state.searchValue} push />}
+                        </div>
+                        <div className="recent-post mt-4">
+                          <h2 className="">Recent Post</h2>
+                          <RecentPost />
+                        </div>
+                        <div className="categories mt-4">
+                          <h2 className="">Categories</h2>
+                          <CategoryList />
+                        </div>
+                      </article>
+                    </section>
+                  </main>
+                </React.Fragment>
+              ) :
+              (
+                <React.Fragment>
+                  <NavbarTop />
+                  <main className="container">
+                    {/* Logo */}
+                    <div className="neuronerdz-logo">
+                      <img src={urlR + "images/logoMain.png"} alt="Neuronerdz" />
+                      <h6>Neuronerdz</h6>
+                    </div>
+                    {/* Navbar bootom */}
+                    <NavbarBottom />
+                    <section className="row">
+                      Home
+                    </section>
+                    <Switch>
+                      <Route exact path='/(.+)' render={() => this.setState({})} />
+                    </Switch>
+                  </main>
+                </React.Fragment>
+              )
           }
         </BrowserRouter>
       </React.Fragment >
