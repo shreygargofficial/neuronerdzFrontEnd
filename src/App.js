@@ -17,7 +17,12 @@ import NavbarBottom from './components/NavbarBottom'
 import { urlR } from './components/url'
 import PostBlog from './components/PostBlog';
 import Admin from './components/Admin';
-import SideNav from './components/sideNav';
+import AdminPost from './components/AdminPost';
+import AdminComment from './components/AdminComments';
+import AdminUser from './components/AdminUsers';
+import User from './components/User';
+
+
 
 class App extends React.Component {
   state = {
@@ -25,7 +30,7 @@ class App extends React.Component {
     searchSubmitStatus: false
   }
   searchChangeHandler = (e) => {
-    this.setState({ searchValue: e.target.value })
+    this.setState({ searchValue: e.target.value,searchSubmitStatus:false })
   }
   searchSubmit = () => {
     this.setState({ searchSubmitStatus: true })
@@ -51,6 +56,7 @@ class App extends React.Component {
                   <article className="col-md-8 ">
                     <Switch>
                       <Route exact path={'/contact'} component={Contact} />
+                      <Route exact path={'/admin/*'} render={()=>this.setState({})} />
                       <Route exact path={'/about'} component={About} />
                       <Route exact path={'/home'} render={() => <Redirect to="/" push />} />
                       <Route exact path={'/team'} component={Team} />
@@ -83,11 +89,19 @@ class App extends React.Component {
               </main>
             </React.Fragment> : (
               <React.Fragment>
-                {!window.location.pathname.match(/\/admin\/login/) ?
-                <SideNav />:""}
                 <Switch>
                   <Route exact path={'/admin'} component={Admin} />
                   <Route exact path={'/admin/login'} component={Login} />
+                  <Route exact path={'/admin/post'} component={AdminPost} />
+                  <Route exact path={'/admin/comment'} component={AdminComment} />
+                  <Route exact path={'/admin/user'} component={AdminUser} />
+                  <Route exact path={'/admin/user/:username'} component={User} />
+                  <Route exact path={'/'} render={()=>this.setState({})} />
+                  
+                
+                  
+
+                  
                 </Switch>
               </React.Fragment>
             )

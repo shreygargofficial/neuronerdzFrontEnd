@@ -1,5 +1,7 @@
 import React from 'react';
 import { urlR } from './url'
+import {Link} from 'react-router-dom';
+import { Redirect } from 'react-router-dom'
 export default class sideNav extends React.Component {
     state = {
         collapse: true
@@ -9,12 +11,14 @@ export default class sideNav extends React.Component {
         this.setState({ collapse: status })
     }
     render() {
+        let userData = JSON.parse(sessionStorage.getItem("userData"))
         let collapseStatus=this.state.collapse?"collapse-side":" incollapse";
+        if(userData)
         return (
             <React.Fragment>
                 <nav className="top-admin-nav">
                     <div className="user-logged">
-                        Shrey
+                        {userData.userName}
                     </div>
                     <div className="humburger" onClick={this.sidenavCollapse}>
                         <div className="bar"></div>
@@ -29,15 +33,19 @@ export default class sideNav extends React.Component {
                             <img src={urlR + "images/logoMain.png"} width="38px" height="38px" alt="neuronerdz sogo" />
                             <span>Neuronerdz</span>
                         </li>
-                        <li>Post</li>
-                        <li>User</li>
-                        <li>Comments</li>
+                        <Link to="/admin/post"><li>Post</li></Link>
+                        <Link to="/admin/user"><li>User</li></Link>
+                        <Link to="/admin/comments"><li>Comments</li></Link> 
+                        <Link to="/"><li>Visit Site</li></Link> 
 
                     </ul>
                 </aside>
 
               
             </React.Fragment>
+        )
+        return (
+            <Redirect to={'/admin'} />
         )
     }
 }

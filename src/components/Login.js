@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import url from './url'
+import { Redirect } from 'react-router-dom'
 export default class Login extends React.Component {
 
     state = {
@@ -13,12 +14,13 @@ export default class Login extends React.Component {
             userPassword: false
         },
         success: "",
-        err: ""
+        err: "",
+        userData:""
 
     }
     changeHander = (e) => {
         let form = this.state.form;
-        form[e.target.name] = e.target.value;
+        form[e.target.name] = e.target.value.trim();
         this.setState({ form: form });
         this.validate(e.target.name, e.target.value);
 
@@ -50,8 +52,10 @@ export default class Login extends React.Component {
     submitHandler = (e) => {
         e.preventDefault();
         axios.post(url + "loginUser", this.state.form).then(success => {
-            console.log(success)
             this.setState({ success: success.data.data, err: "" })
+            axios.get(url+"getUserByUserName/"+this.state.form.loginId).then(sucessUser=>{
+                this.setState({userData:sucessUser.data.data})
+            })
         }).catch(err => {
             if (err.response) {
                 this.setState({ success: "", err: err.response.data.message })
@@ -96,11 +100,14 @@ export default class Login extends React.Component {
                             <button type="submit"
                                 disabled={!(this.state.formValid.loginId && this.state.formValid.userPassword)}
                                 className="btn btn-warning form-control">
-                                Submit
+                                Login
                         </button>
                         </form>
                     </article>
                 </section>
+                {this.state.userData&&sessionStorage.setItem("userData",JSON.stringify(this.state.userData))}
+                {JSON.parse(sessionStorage.getItem("userData"))&&<Redirect to={"/admin"}  />}
+
             </main>
 
         )

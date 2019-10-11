@@ -4,6 +4,12 @@
 .mt-10 {
   margin-top: 50px; }
 
+.mt-center {
+  position: absolute;
+  top: 40%;
+  left: 0;
+  right: 0; }
+
 .navbar-top {
   background-color: #AF0017;
   font-size: 12px;
@@ -137,6 +143,7 @@ a:hover {
 
 .side-admin-nav {
   max-width: 240px;
+  z-index: 999;
   position: fixed;
   top: 31px;
   bottom: 0;
@@ -202,6 +209,15 @@ a:hover {
   background: #fff;
   text-align: center;
   padding-top: 30px; }
+
+.user-row {
+  padding: 10px;
+  margin-top: 3px; }
+
+.user-row:hover {
+  background: #AF0017;
+  cursor: pointer;
+  color: #fff; }
 
 @media screen and (max-width: 400px) {
   .navbar-navigations {
