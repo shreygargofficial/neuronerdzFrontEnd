@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect, Link } from 'react-router-dom'
+import { Redirect } from 'react-router-dom'
 
 import SideNav from './sideNav';
 import Axios from 'axios';
@@ -46,7 +46,7 @@ export default class User extends React.Component {
                     formValid.emailId = false;
                     formErr.emailId = "Please Enter Mail id"
                 }
-                else if (!value.match(/[a-zA-Z._0-9]+\@[a-zA-Z]+\.[a-zA-Z]{2,4}/)) {
+                else if (!value.match(/[a-zA-Z._0-9]+@[a-zA-Z]+\.[a-zA-Z]{2,4}/)) {
                     formValid.emailId = false;
                     formErr.emailId = "Please Enter Correct Mail id"
                 }
@@ -108,7 +108,7 @@ export default class User extends React.Component {
                     <SideNav />
                     <div className="container mt-10">
                         <article className="row justify-content-center">
-                            {this.state.users &&( this.state.users.userName !=userData.userName) ?
+                            {this.state.users &&( this.state.users.userName !==userData.userName) ?
                                 (
                                     <section className="col-md-6 col-lg-4">
                                         <form className="form-login" onSubmit={this.submitHandler}>

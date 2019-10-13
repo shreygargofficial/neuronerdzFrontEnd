@@ -230,6 +230,7 @@ color:$primary;
     border: 1px solid #dedede;
     padding: 30px;
     margin-top: 100px;
+    position: relative;
     border-radius: 3px;
     .form-login-heading{
         text-align: center;
@@ -268,7 +269,15 @@ color:$primary;
     cursor: pointer;
     color:#fff;
 }
-
+.cross-sign{
+    float: right;
+    position: absolute;
+    right: 6px;
+    top:2px;
+    border:1px solid #dedede;
+    padding: 0px 8px;
+    cursor: pointer;
+}
 
 @media screen and (max-width : 400px){
     .navbar-navigations{

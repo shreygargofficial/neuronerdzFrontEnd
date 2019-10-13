@@ -115,7 +115,7 @@ class App extends React.Component {
                     {/* Navbar bootom */}
                     <NavbarBottom />
                     <section className="row">
-                      Home
+                     <Home/>
                       <div className="search-container">
                         <input type="text" placeholder="search..." value={this.state.searchValue} onChange={this.searchChangeHandler} id="search" />
                         <button className="bt bt-primary" onClick={this.searchSubmit}>search</button>

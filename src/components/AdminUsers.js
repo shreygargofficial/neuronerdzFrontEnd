@@ -8,42 +8,42 @@ export default class AdminUsers extends React.Component {
     state = {
         users: "",
         err: "",
-        addUserSuccessMsg:"",
-        addUserErrorMsg:"",
+        addUserSuccessMsg: "",
+        addUserErrorMsg: "",
         addUserButtonStatus: false,
-        userPost:{
-            name:"",
-            userName:"",
-            emailId:"",
-            userPassword:"",
-            repassword:"",
-            userPhoneNumbers:""
+        userPost: {
+            name: "",
+            userName: "",
+            emailId: "",
+            userPassword: "",
+            repassword: "",
+            userPhoneNumbers: ""
         },
-        formValid:{
-            name:false,
-            userName:false,
-            emailId:false,
-            userPassword:false,
-            repassword:false,
-            userPhoneNumbers:false
+        formValid: {
+            name: false,
+            userName: false,
+            emailId: false,
+            userPassword: false,
+            repassword: false,
+            userPhoneNumbers: false
         },
-        formErr:{
-            name:"",
-            userName:"",
-            emailId:"",
-            userPassword:"",
-            repassword:"",
-            userPhoneNumbers:""
+        formErr: {
+            name: "",
+            userName: "",
+            emailId: "",
+            userPassword: "",
+            repassword: "",
+            userPhoneNumbers: ""
         }
 
     }
-    changeHander=(e)=>{
-        let userPost=this.state.userPost;
-        userPost[e.target.name]=e.target.value;
-        this.setState({userPost:userPost})
-        this.validate(e.target.name,e.target.value)
+    changeHander = (e) => {
+        let userPost = this.state.userPost;
+        userPost[e.target.name] = e.target.value;
+        this.setState({ userPost: userPost })
+        this.validate(e.target.name, e.target.value)
     }
-    validate=(name,value)=>{
+    validate = (name, value) => {
         let formErr = this.state.formErr;
         let formValid = this.state.formValid;
         switch (name) {
@@ -52,7 +52,7 @@ export default class AdminUsers extends React.Component {
                     formValid.emailId = false;
                     formErr.emailId = "Please Enter Mail id"
                 }
-                else if (!value.match(/[a-zA-Z._0-9]+\@[a-zA-Z]+\.[a-zA-Z]{2,4}/)) {
+                else if (!value.match(/[a-zA-Z._0-9]+@[a-zA-Z]+\.[a-zA-Z]{2,4}/)) {
                     formValid.emailId = false;
                     formErr.emailId = "Please Enter Correct Mail id"
                 }
@@ -75,15 +75,71 @@ export default class AdminUsers extends React.Component {
                     formErr.name = ""
                 }
                 break;
+            case "userName":
+                if (!value) {
+                    formValid.userName = false;
+                    formErr.userName = "Please Enter User Name"
+                }
+                else if (value.match(/[@!#$%^&*() ]/)) {
+                    formValid.userName = false;
+                    formErr.userName = "Enter User Name without special character and white space"
+                }
+                else {
+                    formValid.userName = true;
+                    formErr.userName = ""
+                }
+                break;
+            case "userPassword":
+                if (!value) {
+                    formValid.userPassword = false;
+                    formErr.userPassword = "Please Enter Password"
+                }
+                else if (!(value.match(/[A-Z]/) && value.match(/[a-z]/) && value.match(/[0-9]/) && value.match(/[@!#$%^&*()]/) && value.length > 7)) {
+                    formValid.userPassword = false;
+                    formErr.userPassword = "Password field should have uppercase, lower case, digit and a special charater and it should be of length 8 or more"
+                }
+                else {
+                    formValid.userPassword = true;
+                    formErr.userPassword = ""
+                }
+                break;
+            case "repassword":
+                if (!value) {
+                    formValid.repassword = false;
+                    formErr.repassword = "Please Enter Confirm Password"
+                }
+                else if (value !== this.state.userPost.userPassword) {
+                    formValid.repassword = false;
+                    formErr.repassword = "Password and Confirm Password are not same"
+                }
+                else {
+                    formValid.repassword = true;
+                    formErr.repassword = ""
+                }
+                break;
+            case "userPhoneNumbers":
+                if (!value) {
+                    formValid.userPhoneNumbers = false;
+                    formErr.userPhoneNumbers = "Please Enter Phone Number"
+                }
+                else if (!value.toString().match(/[6-9][0-9]{9}/)) {
+                    formValid.userPhoneNumbers = false;
+                    formErr.userPhoneNumbers = "Phone Number should start from 6,7,8,9 and should be 10 digit long"
+                }
+                else {
+                    formValid.userPhoneNumbers = true;
+                    formErr.userPhoneNumbers = ""
+                }
+                break;
             default:
                 break;
 
         }
     }
-    submitHandler=(e)=>{
+    submitHandler = (e) => {
         e.preventDefault();
         Axios.post(url + 'addUser/', this.state.userPost).then(success => {
-            this.setState({ addUserSuccessMsg: success.data.data,addUserErrorMsg: "" })
+            this.setState({ addUserSuccessMsg: success.data.data, addUserErrorMsg: "" })
         }).catch(error => {
             if (error.response)
                 this.setState({ addUserSuccessMsg: "", addUserErrorMsg: error.response.data.message })
@@ -114,7 +170,6 @@ export default class AdminUsers extends React.Component {
                 <React.Fragment>
                     <SideNav />
                     <div className="container mt-10 mb-2">
-                        {/* {JSON.stringify(this.state)} */}
                         <button className="bt bt-primary" onClick={this.addUserButtonStatusToggeler}>
                             Add User
                         </button>
@@ -123,6 +178,7 @@ export default class AdminUsers extends React.Component {
                             <section className="row justify-content-center">
                                 <article className="col-md-6 col-lg-4">
                                     <form className="form-login" onSubmit={this.submitHandler}>
+                                        <div className="cross-sign" onClick={this.addUserButtonStatusToggeler}>x</div>
                                         <div className="form-group">
                                             <input
                                                 type="text"
@@ -134,6 +190,7 @@ export default class AdminUsers extends React.Component {
 
                                             />
                                         </div>
+                                        <div className="text-danger">{this.state.formErr.name}</div>
                                         <div className="form-group">
                                             <input
                                                 type="text"
@@ -145,6 +202,7 @@ export default class AdminUsers extends React.Component {
 
                                             />
                                         </div>
+                                        <div className="text-danger">{this.state.formErr.userName}</div>
                                         <div className="form-group">
                                             <input
                                                 type="text"
@@ -155,7 +213,7 @@ export default class AdminUsers extends React.Component {
                                                 onChange={this.changeHander}
                                             />
                                         </div>
-
+                                        <div className="text-danger">{this.state.formErr.emailId}</div>
                                         <div className="form-group">
                                             <input
                                                 type="password"
@@ -166,6 +224,7 @@ export default class AdminUsers extends React.Component {
                                                 onChange={this.changeHander}
                                             />
                                         </div>
+                                        <div className="text-danger">{this.state.formErr.userPassword}</div>
                                         <div className="form-group">
                                             <input
                                                 type="password"
@@ -176,21 +235,25 @@ export default class AdminUsers extends React.Component {
                                                 onChange={this.changeHander}
                                             />
                                         </div>
+                                        <div className="text-danger">{this.state.formErr.repassword}</div>
                                         <div className="form-group">
                                             <input
                                                 type="number"
                                                 placeholder="Input Contact Number"
                                                 className="form-control"
                                                 name="userPhoneNumbers"
-                                                value={this.state.userPost.userPhoneNumbers }
+                                                value={this.state.userPost.userPhoneNumbers}
                                                 onChange={this.changeHander}
                                             />
                                         </div>
+                                        <div className="text-danger">{this.state.formErr.userPhoneNumbers}</div>
                                         <button type="submit"
                                             disabled={!(this.state.formValid.name && this.state.formValid.emailId && this.state.formValid.userName && this.state.formValid.userPassword && this.state.formValid.repassword && this.state.formValid.userPhoneNumbers)}
                                             className="btn btn-warning form-control">
                                             Add
                                           </button>
+                                          <div className="text-success">{this.state.addUserSuccessMsg}</div>
+                                          <div className="text-danger">{this.state.addUserErrorMsg}</div>
 
                                     </form>
                                 </article>
