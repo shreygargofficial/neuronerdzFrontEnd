@@ -116,6 +116,11 @@ class App extends React.Component {
                     <NavbarBottom />
                     <section className="row">
                       Home
+                      <div className="search-container">
+                        <input type="text" placeholder="search..." value={this.state.searchValue} onChange={this.searchChangeHandler} id="search" />
+                        <button className="bt bt-primary" onClick={this.searchSubmit}>search</button>
+                        {this.state.searchSubmitStatus && <Redirect to={'/search/' + this.state.searchValue} push />}
+                      </div>
                     </section>
                     <Switch>
                       <Route exact path='/(.+)' render={() => this.setState({})} />
