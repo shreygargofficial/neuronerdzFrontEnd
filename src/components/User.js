@@ -105,7 +105,7 @@ export default class User extends React.Component {
         if (userData)
             return (
                 <React.Fragment>
-                    <SideNav />
+                    <SideNav location="user"/>
                     <div className="container mt-10">
                         <article className="row justify-content-center">
                             {this.state.users &&( this.state.users.userName !==userData.userName) ?
@@ -120,7 +120,7 @@ export default class User extends React.Component {
                                                     name="userName"
                                                     value={this.state.users.userName}
                                                     onChange={this.changeHander}
-                                                    disabled="true"
+                                                    disabled={true}
                                                 />
                                             </div>
                                             <div className="form-group">

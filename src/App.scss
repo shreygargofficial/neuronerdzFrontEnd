@@ -43,6 +43,9 @@ $heightAdminTopNavbar:20px;
         text-decoration: none;
     }
 }
+.border-grey{
+    border:1px solid $border-color
+}
 .navbar-bottom{
     background-color:$secondary;
     border: 1px solid $border-color;
@@ -196,6 +199,9 @@ color:$primary;
             padding-left: 70px;
             color: #fff;
         }
+        .active-admin-side-nav{
+            background-color: $primary;
+            }
         li:hover{
             background: $primary;
             cursor: pointer;
@@ -269,13 +275,24 @@ color:$primary;
     cursor: pointer;
     color:#fff;
 }
+
 .cross-sign{
     float: right;
     position: absolute;
-    right: 6px;
+    right: 3px;
     top:2px;
-    border:1px solid #dedede;
+    // border:1px solid #dedede;
+    color:$primary;
     padding: 0px 8px;
+    cursor: pointer;
+}
+.user-comment{
+    border:1px solid $primary;
+    padding: 10px;
+    height:100px;
+    overflow-y: auto;
+}
+.cursor{
     cursor: pointer;
 }
 

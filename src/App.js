@@ -21,6 +21,7 @@ import AdminPost from './components/AdminPost';
 import AdminComment from './components/AdminComments';
 import AdminUser from './components/AdminUsers';
 import User from './components/User';
+import NotFound from './components/NotFound';
 
 
 
@@ -48,9 +49,10 @@ class App extends React.Component {
                   <Route exact path={'/admin'} component={Admin} />
                   <Route exact path={'/admin/login'} component={Login} />
                   <Route exact path={'/admin/post'} component={AdminPost} />
-                  <Route exact path={'/admin/comment'} component={AdminComment} />
+                  <Route exact path={'/admin/comments'} component={AdminComment} />
                   <Route exact path={'/admin/user'} component={AdminUser} />
                   <Route exact path={'/admin/user/:username'} component={User} />
+                  <Route exact path={'/admin/:anything'} component={NotFound} />
                   <Route exact path={'/'} render={() => this.setState({})} />
                 </Switch>
               </React.Fragment>

@@ -37,6 +37,17 @@ export default class AdminUsers extends React.Component {
         }
 
     }
+    componentDidMount() {
+        Axios.get(url + 'getAllUsers/').then(success => {
+            this.setState({ users: success.data.data, err: "" })
+        }).catch(error => {
+            if (error.response)
+                this.setState({ users: "", err: error.response.data.message })
+            else
+                this.setState({ users: "", err: error.message })
+
+        })
+    }
     changeHander = (e) => {
         let userPost = this.state.userPost;
         userPost[e.target.name] = e.target.value;
@@ -149,17 +160,7 @@ export default class AdminUsers extends React.Component {
 
         })
     }
-    componentDidMount() {
-        Axios.get(url + 'getAllUsers/').then(success => {
-            this.setState({ users: success.data.data, err: "" })
-        }).catch(error => {
-            if (error.response)
-                this.setState({ users: "", err: error.response.data.message })
-            else
-                this.setState({ users: "", err: error.message })
-
-        })
-    }
+   
     addUserButtonStatusToggeler = () => {
         this.setState({ addUserButtonStatus: !this.state.addUserButtonStatus })
     }
@@ -168,7 +169,7 @@ export default class AdminUsers extends React.Component {
         if (userData)
             return (
                 <React.Fragment>
-                    <SideNav />
+                    <SideNav location="user"/>
                     <div className="container mt-10 mb-2">
                         <button className="bt bt-primary" onClick={this.addUserButtonStatusToggeler}>
                             Add User
