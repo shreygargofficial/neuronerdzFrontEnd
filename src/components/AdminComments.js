@@ -5,7 +5,9 @@ import Axios from 'axios'
 import url from './url'
 export default class AdminComment extends React.Component {
     state = {
-        comments: ""
+        comments: "",
+        commentStatusSuccess: "",
+        commentStatusError: ""
     }
     componentDidMount() {
         Axios.get(url + 'getAllTheComments/').then(success => {
@@ -15,6 +17,18 @@ export default class AdminComment extends React.Component {
                 this.setState({ comments: "", err: error.response.data.message })
             else
                 this.setState({ comments: "", err: error.message })
+
+        })
+    }
+    ChangeStatus(id, status) {
+        Axios.put(url + 'changeCommentStatus/' + id + '/' + status).then(success => {
+            this.setState({ commentStatusSuccess: success.data.data, commentStatusError: "" })
+            this.componentDidMount();
+        }).catch(error => {
+            if (error.response)
+                this.setState({ commentStatusSuccess: "", commentStatusError: error.response.data.message })
+            else
+                this.setState({ commentStatusSuccess: "", commentStatusError: error.message })
 
         })
     }
@@ -44,11 +58,11 @@ export default class AdminComment extends React.Component {
                                                     {ele.userMessage}
                                                 </div>
                                             </div>
-                                            <span className={ele.commentStatus === "na" ? "text-success cursor" : "text-danger cursor"}>
-                                                {ele.commentStatus === "na" ? "Approve" : "Disapprove"}
+                                            <span className={ele.commentStatus === "na" || ele.commentStatus === "spam" ? "text-success cursor" : "text-danger cursor"}>
+                                                {ele.commentStatus === "na" || ele.commentStatus === "spam" ? <div onClick={() => this.ChangeStatus(ele.commentId, "approve")}>Approve</div> : <div onClick={() => this.ChangeStatus(ele.commentId, "na")}>Disapprove</div>}
                                             </span>
                                             &nbsp;
-                                        <span className={"text-danger cursor"}>{"Spam"}</span>
+                                {ele.commentStatus !== "spam" && <span className={"text-danger cursor"} onClick={() => this.ChangeStatus(ele.commentId, "spam")}>{"Spam"}</span>}
                                         </article>
                                     </section>
                                 )
@@ -61,7 +75,7 @@ export default class AdminComment extends React.Component {
                         </div>
                     </React.Fragment>
                 )
-            else{
+            else {
                 return <h2 className="text-center">Sorry but you are not authorized</h2>
             }
         return (
