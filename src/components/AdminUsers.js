@@ -160,154 +160,158 @@ export default class AdminUsers extends React.Component {
 
         })
     }
-   
+
     addUserButtonStatusToggeler = () => {
         this.setState({ addUserButtonStatus: !this.state.addUserButtonStatus })
     }
     render() {
         let userData = JSON.parse(sessionStorage.getItem("userData"))
         if (userData)
-            return (
-                <React.Fragment>
-                    <SideNav location="user"/>
-                    <div className="container mt-10 mb-2">
-                        <button className="bt bt-primary" onClick={this.addUserButtonStatusToggeler}>
-                            Add User
+            if (userData.userPermission === "admin")
+                return (
+                    <React.Fragment>
+                        <SideNav location="user" />
+                        <div className="container mt-10 mb-2">
+                            <button className="bt bt-primary" onClick={this.addUserButtonStatusToggeler}>
+                                Add User
                         </button>
 
-                        {this.state.addUserButtonStatus && (
-                            <section className="row justify-content-center">
-                                <article className="col-md-6 col-lg-4">
-                                    <form className="form-login" onSubmit={this.submitHandler}>
-                                        <div className="cross-sign" onClick={this.addUserButtonStatusToggeler}>x</div>
-                                        <div className="form-group">
-                                            <input
-                                                type="text"
-                                                placeholder="Name"
-                                                className="form-control"
-                                                name="name"
-                                                value={this.state.userPost.name}
-                                                onChange={this.changeHander}
+                            {this.state.addUserButtonStatus && (
+                                <section className="row justify-content-center">
+                                    <article className="col-md-6 col-lg-4">
+                                        <form className="form-login" onSubmit={this.submitHandler}>
+                                            <div className="cross-sign" onClick={this.addUserButtonStatusToggeler}>x</div>
+                                            <div className="form-group">
+                                                <input
+                                                    type="text"
+                                                    placeholder="Name"
+                                                    className="form-control"
+                                                    name="name"
+                                                    value={this.state.userPost.name}
+                                                    onChange={this.changeHander}
 
-                                            />
-                                        </div>
-                                        <div className="text-danger">{this.state.formErr.name}</div>
-                                        <div className="form-group">
-                                            <input
-                                                type="text"
-                                                placeholder="Enter User Name"
-                                                className="form-control"
-                                                name="userName"
-                                                value={this.state.userPost.userName}
-                                                onChange={this.changeHander}
+                                                />
+                                            </div>
+                                            <div className="text-danger">{this.state.formErr.name}</div>
+                                            <div className="form-group">
+                                                <input
+                                                    type="text"
+                                                    placeholder="Enter User Name"
+                                                    className="form-control"
+                                                    name="userName"
+                                                    value={this.state.userPost.userName}
+                                                    onChange={this.changeHander}
 
-                                            />
-                                        </div>
-                                        <div className="text-danger">{this.state.formErr.userName}</div>
-                                        <div className="form-group">
-                                            <input
-                                                type="text"
-                                                placeholder="Email Id"
-                                                className="form-control"
-                                                name="emailId"
-                                                value={this.state.userPost.emailId}
-                                                onChange={this.changeHander}
-                                            />
-                                        </div>
-                                        <div className="text-danger">{this.state.formErr.emailId}</div>
-                                        <div className="form-group">
-                                            <input
-                                                type="password"
-                                                placeholder="Set Password"
-                                                className="form-control"
-                                                name="userPassword"
-                                                value={this.state.userPost.userPassword}
-                                                onChange={this.changeHander}
-                                            />
-                                        </div>
-                                        <div className="text-danger">{this.state.formErr.userPassword}</div>
-                                        <div className="form-group">
-                                            <input
-                                                type="password"
-                                                placeholder="Enter Your Password Again"
-                                                className="form-control"
-                                                name="repassword"
-                                                value={this.state.userPost.repassword}
-                                                onChange={this.changeHander}
-                                            />
-                                        </div>
-                                        <div className="text-danger">{this.state.formErr.repassword}</div>
-                                        <div className="form-group">
-                                            <input
-                                                type="number"
-                                                placeholder="Input Contact Number"
-                                                className="form-control"
-                                                name="userPhoneNumbers"
-                                                value={this.state.userPost.userPhoneNumbers}
-                                                onChange={this.changeHander}
-                                            />
-                                        </div>
-                                        <div className="text-danger">{this.state.formErr.userPhoneNumbers}</div>
-                                        <button type="submit"
-                                            disabled={!(this.state.formValid.name && this.state.formValid.emailId && this.state.formValid.userName && this.state.formValid.userPassword && this.state.formValid.repassword && this.state.formValid.userPhoneNumbers)}
-                                            className="btn btn-warning form-control">
-                                            Add
+                                                />
+                                            </div>
+                                            <div className="text-danger">{this.state.formErr.userName}</div>
+                                            <div className="form-group">
+                                                <input
+                                                    type="text"
+                                                    placeholder="Email Id"
+                                                    className="form-control"
+                                                    name="emailId"
+                                                    value={this.state.userPost.emailId}
+                                                    onChange={this.changeHander}
+                                                />
+                                            </div>
+                                            <div className="text-danger">{this.state.formErr.emailId}</div>
+                                            <div className="form-group">
+                                                <input
+                                                    type="password"
+                                                    placeholder="Set Password"
+                                                    className="form-control"
+                                                    name="userPassword"
+                                                    value={this.state.userPost.userPassword}
+                                                    onChange={this.changeHander}
+                                                />
+                                            </div>
+                                            <div className="text-danger">{this.state.formErr.userPassword}</div>
+                                            <div className="form-group">
+                                                <input
+                                                    type="password"
+                                                    placeholder="Enter Your Password Again"
+                                                    className="form-control"
+                                                    name="repassword"
+                                                    value={this.state.userPost.repassword}
+                                                    onChange={this.changeHander}
+                                                />
+                                            </div>
+                                            <div className="text-danger">{this.state.formErr.repassword}</div>
+                                            <div className="form-group">
+                                                <input
+                                                    type="number"
+                                                    placeholder="Input Contact Number"
+                                                    className="form-control"
+                                                    name="userPhoneNumbers"
+                                                    value={this.state.userPost.userPhoneNumbers}
+                                                    onChange={this.changeHander}
+                                                />
+                                            </div>
+                                            <div className="text-danger">{this.state.formErr.userPhoneNumbers}</div>
+                                            <button type="submit"
+                                                disabled={!(this.state.formValid.name && this.state.formValid.emailId && this.state.formValid.userName && this.state.formValid.userPassword && this.state.formValid.repassword && this.state.formValid.userPhoneNumbers)}
+                                                className="btn btn-warning form-control">
+                                                Add
                                           </button>
-                                          <div className="text-success">{this.state.addUserSuccessMsg}</div>
-                                          <div className="text-danger">{this.state.addUserErrorMsg}</div>
+                                            <div className="text-success">{this.state.addUserSuccessMsg}</div>
+                                            <div className="text-danger">{this.state.addUserErrorMsg}</div>
 
-                                    </form>
-                                </article>
-                            </section>
+                                        </form>
+                                    </article>
+                                </section>
 
-                        )}
+                            )}
 
-                        <br /><br />
-                        {this.state.users && (
-                            <div className="row break-word">
-                                <div className="col-3">
-                                    <h5>{"User Name"}</h5>
+                            <br /><br />
+                            {this.state.users && (
+                                <div className="row break-word">
+                                    <div className="col-3">
+                                        <h5>{"User Name"}</h5>
+                                    </div>
+                                    <div className="col-3">
+                                        <h5>{"Email Id"}</h5>
+                                    </div>
+                                    <div className="col-3">
+                                        <h5>  {"Name"}</h5>
+                                    </div>
+                                    <div className="col-3">
+                                        <h5> {"Permission"}</h5>
+                                    </div>
+
+
                                 </div>
-                                <div className="col-3">
-                                    <h5>{"Email Id"}</h5>
-                                </div>
-                                <div className="col-3">
-                                    <h5>  {"Name"}</h5>
-                                </div>
-                                <div className="col-3">
-                                    <h5> {"Permission"}</h5>
-                                </div>
+                            )}
 
+                            {this.state.users ? this.state.users.map((user, key) => {
+                                return (
+                                    <Link key={key} to={'/admin/user/' + user.userName}>
+                                        {(userData.userName !== user.userName) &&
+                                            <div className="row user-row break-word" >
+                                                <div className="col-3">
+                                                    {user.userName}
+                                                </div>
+                                                <div className="col-3">
+                                                    {user.emailId}
+                                                </div>
+                                                <div className="col-3">
+                                                    {user.name}
+                                                </div>
+                                                <div className="col-3">
+                                                    {user.userPermission}
+                                                </div>
+                                            </div>
+                                        }
+                                    </Link>
+                                )
+                            }) : <h1 className="text-center">No Users Found</h1>}
+                        </div>
 
-                            </div>
-                        )}
-
-                        {this.state.users ? this.state.users.map((user, key) => {
-                            return (
-                                <Link key={key} to={'/admin/user/' + user.userName}>
-                                    {(userData.userName !== user.userName) &&
-                                        <div className="row user-row break-word" >
-                                            <div className="col-3">
-                                                {user.userName}
-                                            </div>
-                                            <div className="col-3">
-                                                {user.emailId}
-                                            </div>
-                                            <div className="col-3">
-                                                {user.name}
-                                            </div>
-                                            <div className="col-3">
-                                                {user.userPermission}
-                                            </div>
-                                        </div>
-                                    }
-                                </Link>
-                            )
-                        }) : <h1 className="text-center">No Users Found</h1>}
-                    </div>
-
-                </React.Fragment>
-            )
+                    </React.Fragment>
+                )
+            else {
+                return <h2 className="text-center">Sorry but you are not authorized</h2>
+            }
         return (
             <Redirect to={'/admin/login'} />
         )

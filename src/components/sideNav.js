@@ -33,17 +33,17 @@ export default class sideNav extends React.Component {
                                 <img src={urlR + "images/logoMain.png"} width="38px" height="38px" alt="neuronerdz sogo" />
                                 <span>Neuronerdz</span>
                             </li>
-                            <Link to="/admin/post"><li className={(this.props.location && this.props.location === "post") ? "active-admin-side-nav" :""}>Post</li></Link>
-                            <Link to="/admin/user"><li className={(this.props.location && this.props.location === "user") ? "active-admin-side-nav":""}>User</li></Link>
-                            <Link to="/admin/comments">
-                                <li className={(this.props.location && this.props.location === "comment") ? "active-admin-side-nav":""}>
-                                    Comments &nbsp;
+                            <Link to="/admin/post"><li className={(this.props.location && this.props.location === "post") ? "active-admin-side-nav" : ""}>Post</li></Link>
+                            {userData.userPermission === "admin" && <Link to="/admin/user"><li className={(this.props.location && this.props.location === "user") ? "active-admin-side-nav" : ""}>User</li></Link>}
+                                <Link to="/admin/comments">
+                                    {userData.userPermission === "admin" && <li className={(this.props.location && this.props.location === "comment") ? "active-admin-side-nav" : ""}>
+                                        Comments &nbsp;
                                     <i className={this.props.countComment && "badge badge-primary"}>
                                             {this.props.countComment}
-                                    </i>
-                                </li>
-                            </Link>
-                            <Link to="/"><li>Visit Site</li></Link>
+                                        </i>
+                                    </li>}
+                                </Link>
+                                <Link to="/"><li>Visit Site</li></Link>
 
                         </ul>
                     </aside>

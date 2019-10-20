@@ -22,44 +22,48 @@ export default class AdminComment extends React.Component {
         let counterUnreadComment = 0;
         let userData = JSON.parse(sessionStorage.getItem("userData"))
         if (userData)
-            return (
-                <React.Fragment>
-                    {this.state.comments && this.state.comments.forEach((ele) => {
+            if (userData.userPermission === "admin")
+                return (
+                    <React.Fragment>
+                        {this.state.comments && this.state.comments.forEach((ele) => {
 
-                        if (ele.commentStatus === "na")
-                            counterUnreadComment++
+                            if (ele.commentStatus === "na")
+                                counterUnreadComment++
 
 
-                    })}
-                    <SideNav location={"comment"} countComment={counterUnreadComment} />
-                    <div className="container mt-10 mb-2">
-                        {this.state.comments ? this.state.comments.map((ele, key) => {
-                            return (
-                                <section key={key} className="row border-grey mt-2">
-                                    <article className="col-md-9">
-                                        <div><strong>EmailId: </strong>{ele.emailId}</div>
-                                        <div><strong>Comment: </strong><br />
-                                            <div className="user-comment text-capitalize">
-                                                {ele.userMessage}
+                        })}
+                        <SideNav location={"comment"} countComment={counterUnreadComment} />
+                        <div className="container mt-10 mb-2">
+                            {this.state.comments ? this.state.comments.map((ele, key) => {
+                                return (
+                                    <section key={key} className="row border-grey mt-2">
+                                        <article className="col-md-9">
+                                            <div><strong>EmailId: </strong>{ele.emailId}</div>
+                                            <div><strong>Comment: </strong><br />
+                                                <div className="user-comment text-capitalize">
+                                                    {ele.userMessage}
+                                                </div>
                                             </div>
-                                        </div>
-                                        <span className={ele.commentStatus === "na" ? "text-success cursor" : "text-danger cursor"}>
-                                            {ele.commentStatus === "na" ? "Approve" : "Disapprove"}
-                                        </span>
-                                        &nbsp;
+                                            <span className={ele.commentStatus === "na" ? "text-success cursor" : "text-danger cursor"}>
+                                                {ele.commentStatus === "na" ? "Approve" : "Disapprove"}
+                                            </span>
+                                            &nbsp;
                                         <span className={"text-danger cursor"}>{"Spam"}</span>
-                                    </article>
-                                </section>
-                            )
-                        })
-                            :
+                                        </article>
+                                    </section>
+                                )
+                            })
+                                :
 
-                            <h2 className="text-center">No Comments</h2>
-                        }
+                                <h2 className="text-center">No Comments</h2>
+                            }
 
-                    </div>
-                </React.Fragment>
-            )
+                        </div>
+                    </React.Fragment>
+                )
+            else{
+                return <h2 className="text-center">Sorry but you are not authorized</h2>
+            }
         return (
             <Redirect to={'/admin/login'} />
         )
