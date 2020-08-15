@@ -52,8 +52,9 @@ class App extends React.Component {
                   <Route exact path={'/admin/comments'} component={AdminComment} />
                   <Route exact path={'/admin/user'} component={AdminUser} />
                   <Route exact path={'/admin/user/:username'} component={User} />
-                  <Route exact path={'/admin/:anything'} component={NotFound} />
+                  <Route exact path={'/admin/*'} component={NotFound} />
                   <Route exact path={'/'} render={() => this.setState({})} />
+                 
                 </Switch>
               </React.Fragment>
             ) : window.location.pathname.match(/\/.+/) ?
@@ -83,6 +84,7 @@ class App extends React.Component {
                           <Route exact path={'/post'} component={PostBlog} />
                           <Route exact path={'/:titleUrl'} component={Article} />
                           <Route exact path={'/'} render={() => this.setState({})} />
+                        
                         </Switch>
                       </article>
                       {/* Search bar for non admin */}
@@ -126,6 +128,7 @@ class App extends React.Component {
                     </section>
                     <Switch>
                       <Route exact path='/(.+)' render={() => this.setState({})} />
+
                     </Switch>
                   </main>
                 </React.Fragment>
