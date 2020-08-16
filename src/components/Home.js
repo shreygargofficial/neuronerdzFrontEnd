@@ -1,9 +1,13 @@
 import React from 'react'
+import Blog from './Blog'
 
-export default class Home extends React.Component{
-    render(){
+export default class Home extends React.Component {
+    render() {
         return (
-            <h1 className="text-center">Home</h1>
+            <div className="container">
+                <Blog />
+            </div>
+
         )
     }
 }

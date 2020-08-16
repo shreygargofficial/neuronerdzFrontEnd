@@ -7,8 +7,8 @@ export default class Card extends React.Component {
 
     render() {
         return (
-            <div className="col-md-6  mb-4">
-                <Link to={'/'+this.props.ele.blogUrl}>
+            <div className="col-sm-6 col-md-4  mb-4">
+                <Link to={'/' + this.props.ele.blogUrl}>
                     <div className="card card-hover">
                         <div className="card-header">
                             <img alt={this.props.ele.blogTitle} src={this.props.ele.blogImage} className="card-img-top" />
@@ -17,7 +17,8 @@ export default class Card extends React.Component {
                             <h5>
                                 {this.props.ele.blogTitle}
                             </h5>
-                            <h6 className="text-center"> --More--</h6>
+                            <p dangerouslySetInnerHTML={{ __html: unescape(this.props.ele.blogBody.slice(0,180)) }}></p>
+                            <p>--More--</p>
                         </div>
                     </div>
                 </Link>

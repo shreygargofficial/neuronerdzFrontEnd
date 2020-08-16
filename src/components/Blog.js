@@ -3,13 +3,14 @@ import axios from 'axios'
 import url from './url'
 import Card from './Card'
 import NotFound from './NotFound'
+import Spinner from './Spinner'
 export default class Blog extends React.Component {
 
     state = {
         data: "",
         err: ""
     }
-    componentDidMount(prevProps) {
+    componentDidMount() {
         axios.get(url + "getAllblogs/").then(success => {
             this.setState({ data: (success.data.data), err: "" })
         }).catch(err => {
@@ -35,7 +36,7 @@ export default class Blog extends React.Component {
                             </React.Fragment>
                         )
                     })}
-                </div> : <NotFound />}
+                </div> : <Spinner />}
             </div>
         )
     }

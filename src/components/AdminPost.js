@@ -6,107 +6,166 @@ import SideNav from './sideNav';
 import Axios from 'axios'
 import { data } from 'jquery';
 export default class AdminPost extends React.Component {
-    state={
+    state = {
         blogBody: "",
         blogCategory: {
-            main: "dfdsf",
-            sub:[]
+            main: [],
+            sub: []
         },
         blogTagNames: [],
-        blogTitle:"",
+        blogTitle: "",
         blogAuthor: "",
-        
-        blogImage:""
+
+        blogImage: "",
+        categories: "",
+        error: "",
+        success: ""
+
     }
-    handleEditorChange = (content,editor) => {
-      this.setState({blogBody:content})
+    componentDidMount() {
+        Axios.get(url + 'getAllCategories').then(data => {
+            console.log(data.data.data)
+            this.setState({categories: data.data.data })
+        }).catch(err => {
+            this.setState({ error: err.response.data.message,success:"" })
+        })
+
+        this.setState({ blogAuthor: JSON.parse(sessionStorage.getItem("userData")).userName })
     }
-    handleChanges=(e)=>{
-        let name=e.target.name;
-        let value=e.target.value;
-        switch(name){
+    handleEditorChange = (content, editor) => {
+        this.setState({ blogBody: content })
+    }
+    handleChanges = (e) => {
+        let name = e.target.name;
+        let value = e.target.value;
+
+        switch (name) {
             case "blogTitle":
-                this.setState({[name]:value})
+                this.setState({ [name]: value })
                 break;
             case "blogTagNames":
-                let tag=value.split(',');
-                this.setState({[name]:tag})
+                let tag = value.split(',');
+                this.setState({ [name]: tag })
                 break;
             case "main":
-                console.log([name],value);
 
-                let category=this.state.blogCategory;
-                category.main=value
-                this.setState({category})
+
+                let category = this.state.blogCategory;
+                category.main = value
+                this.setState({ category })
                 break;
             default:
-                let categoryi=this.state.blogCategory;
-                categoryi.sub=value
-                this.setState({categoryi})
+                let blogCategory = this.state.blogCategory;
+                blogCategory.sub = value
+                this.setState({ blogCategory })
                 break;
 
         }
-                
 
-       
+
+
     }
-    handleClick=()=>{
-        Axios.post(url +'addBlog',this.state).then(data=>{
-            console.log(data.data);
-        }).catch(err=>{
-            console.log(err);
+    handleClick = () => {
+        let obj = {}
+        obj.blogBody = this.state.blogBody
+        obj.blogCategory = this.state.blogCategory
+        obj.blogTagNames = this.state.blogTagNames
+        obj.blogTitle = this.state.blogTitle
+        obj.blogAuthor = this.state.blogAuthor
+
+        obj.blogImage = this.state.blogImage
+
+        Axios.post(url + 'addBlog', obj).then(data => {
+            this.setState({success:data.data.message,error:""})
+        }).catch(err => {
+            this.setState({ error: err.response.data.message,success:"" })
         })
     }
     render() {
-        return (
-            <React.Fragment>
-              <div>Enter Title</div>
-              <br/>
-              <input type="text" className="headingBlog form-control" value={this.state.blogTitle} name="blogTitle" onChange={this.handleChanges}>
+        let userData = JSON.parse(sessionStorage.getItem("userData"))
+        if (userData) {
+            return (
+                <React.Fragment>
+                    <SideNav location="post" />
 
-              </input>
-              <br/>
-              Enter main category
-              <input type="text" className="category form-control"  value={this.state.blogCategory.main} name="main" onChange={this.handleChanges}>
+                    <div className="container mt-10">
+                        <strong className="">Enter Title</strong>
+                        <br />  <br />
+                        <input type="text" className="headingBlog form-control" value={this.state.blogTitle} name="blogTitle" onChange={this.handleChanges}>
+                        </input>
+                        <br />
 
-              </input>
+                        <Editor
+                            initialValue={this.state.content}
+                            name="editors"
+                            init={{
+                                height: 500,
+                                menubar: true,
+                                plugins: [
+                                    'advlist autolink lists link image charmap print preview anchor',
+                                    'searchreplace visualblocks code fullscreen',
+                                    'insertdatetime media table paste code help wordcount'
+                                ],
+                                toolbar:
+                                    'undo redo | formatselect | bold italic backcolor | \
+                                            alignleft aligncenter alignright alignjustify | \
+                                            bullist numlist outdent indent | removeformat | help'
+                            }}
+                            onEditorChange={this.handleEditorChange}
+                        />
+                        <br />
+                           Enter main category
+                           
+                        
 
-              <br/>
-              Enter sub category
-              <input type="text" className="tag form-control" value={this.state.blogCategory.sub}  name="sub" onChange={this.handleChanges}>
+                        <select className="form-control" value={this.state.blogCategory.main} name="main" onChange={this.handleChanges}>
+                            <option value="" >--choose one--</option>
+                            {this.state.categories&&this.state.categories.map((ele,key)=>{
+                                return (
+                                    
+                                   <option key={key} value={ele._id}>
+                                        {ele._id}
+                                   </option>
+                                )
+                            })}
+                        </select>
+                        <br />
+                        Enter sub category
+                        <input type="text" className="tag form-control" value={this.state.blogCategory.sub} name="sub" onChange={this.handleChanges}>
 
-              </input>
+                        </input>
 
-              <br/>
-              Enter tagname seprate by comma
-              <input type="text" className="category form-control"  value={this.state.blogTagNames} name="blogTagNames" onChange={this.handleChanges} >
+                        <br />
+                        Enter tagname seprate by comma
+                        <input type="text" className="category form-control" value={this.state.blogTagNames} name="blogTagNames" onChange={this.handleChanges} >
 
-              </input>
+                        </input>
 
-              <br/>
-              {JSON.stringify(this.state)}
-                <Editor
-                    initialValue={this.state.content}
-                    name="editors"
-                    init={{
-                        height: 500,
-                        menubar: true,
-                        plugins: [
-                            'advlist autolink lists link image charmap print preview anchor',
-                            'searchreplace visualblocks code fullscreen',
-                            'insertdatetime media table paste code help wordcount'
-                        ],
-                        toolbar:
-                            'undo redo | formatselect | bold italic backcolor | \
-             alignleft aligncenter alignright alignjustify | \
-             bullist numlist outdent indent | removeformat | help'
-                    }}
-                    onEditorChange={this.handleEditorChange}
-                />
-                <button onClick={this.handleClick} className="btn btn-success" disabled={!(this.state.blogTitle&&this.state.blogTagNames&&this.state.blogCategory.main&&this.state.blogCategory.sub&&this.state.blogBody)}>add</button>
-            
-            </React.Fragment>
+                        <br />
+                        <div className="text-center">
+                            <button onClick={this.handleClick} className="btn btn-success" disabled={!(this.state.blogTitle && this.state.blogTagNames.length && this.state.blogCategory.main.length && this.state.blogCategory.sub.length && this.state.blogBody)}>
+                                Submit</button>
+                        </div>
+                 
+                        <div className="text-success">
+                            {this.state.success}
+                        </div>
+                        <div className="text-danger">
+                            {this.state.error}
+                        </div>
+                        
 
-        )
+                    </div>
+                </React.Fragment>
+
+            )
+        }
+        else {
+            return (
+                <Redirect to="/admin" />
+            )
+
+        }
+
     }
 }
