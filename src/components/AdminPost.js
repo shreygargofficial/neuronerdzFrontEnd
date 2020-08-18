@@ -4,13 +4,15 @@ import url from './url'
 import { Editor } from '@tinymce/tinymce-react';
 import SideNav from './sideNav';
 import Axios from 'axios'
-import { data } from 'jquery';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import Button from '@material-ui/core/Button';
 export default class AdminPost extends React.Component {
     state = {
         blogBody: "",
         blogCategory: {
-            main: [],
-            sub: []
+            main: "",
+            sub: ""
         },
         blogTagNames: [],
         blogTitle: "",
@@ -19,15 +21,17 @@ export default class AdminPost extends React.Component {
         blogImage: "",
         categories: "",
         error: "",
-        success: ""
-
+        success: "",
+        open: false
     }
     componentDidMount() {
-        Axios.get(url + 'getAllCategories').then(data => {
-            console.log(data.data.data)
-            this.setState({categories: data.data.data })
+        Axios.get(url + 'getAllCategory').then(data => {
+            this.setState({ categories: data.data.data })
         }).catch(err => {
-            this.setState({ error: err.response.data.message,success:"" })
+            if (err.response)
+                this.setState({ error: err.response.data.message, success: "" })
+            else
+                this.setState({ error: err.message, success: "" })
         })
 
         this.setState({ blogAuthor: JSON.parse(sessionStorage.getItem("userData")).userName })
@@ -76,10 +80,16 @@ export default class AdminPost extends React.Component {
         obj.blogImage = this.state.blogImage
 
         Axios.post(url + 'addBlog', obj).then(data => {
-            this.setState({success:data.data.message,error:""})
+            this.setState({ success: data.data.message, error: "", open: true })
         }).catch(err => {
-            this.setState({ error: err.response.data.message,success:"" })
+            if (err.response)
+                this.setState({ error: err.response.data.message, success: "", open: true })
+            else
+                this.setState({ error: err.message, success: "", open: true })
         })
+    }
+    handleSnackbarClose = () => {
+        this.setState({ open: !this.state.open })
     }
     render() {
         let userData = JSON.parse(sessionStorage.getItem("userData"))
@@ -115,17 +125,17 @@ export default class AdminPost extends React.Component {
                         />
                         <br />
                            Enter main category
-                           
-                        
+
+
 
                         <select className="form-control" value={this.state.blogCategory.main} name="main" onChange={this.handleChanges}>
                             <option value="" >--choose one--</option>
-                            {this.state.categories&&this.state.categories.map((ele,key)=>{
+                            {this.state.categories && this.state.categories.map((ele, key) => {
                                 return (
-                                    
-                                   <option key={key} value={ele._id}>
-                                        {ele._id}
-                                   </option>
+
+                                    <option key={key} className="text-capital" value={ele.category}>
+                                        {ele.category}
+                                    </option>
                                 )
                             })}
                         </select>
@@ -142,18 +152,27 @@ export default class AdminPost extends React.Component {
                         </input>
 
                         <br />
-                        <div className="text-center">
-                            <button onClick={this.handleClick} className="btn btn-success" disabled={!(this.state.blogTitle && this.state.blogTagNames.length && this.state.blogCategory.main.length && this.state.blogCategory.sub.length && this.state.blogBody)}>
-                                Submit</button>
+                        <div className="text-center mb-3">
+                            <Button
+                                onClick={this.handleClick}
+                                disabled={!(this.state.blogTitle && this.state.blogTagNames.length && this.state.blogCategory.main.length && this.state.blogCategory.sub.length && this.state.blogBody)}
+                                variant="contained" color="primary">
+                                Submit
+                            </Button>
                         </div>
-                 
-                        <div className="text-success">
-                            {this.state.success}
-                        </div>
-                        <div className="text-danger">
-                            {this.state.error}
-                        </div>
-                        
+                        <Snackbar open={this.state.open} autoHideDuration={3000} >
+                            <MuiAlert onClose={this.handleSnackbarClose} elevation={6} variant="filled" severity="success">
+                                {this.state.success}
+                            </MuiAlert>
+                        </Snackbar>
+                        {this.state.error && <Snackbar open={this.state.open} autoHideDuration={3000} >
+                            <MuiAlert onClose={this.handleSnackbarClose} elevation={6} variant="filled" severity="error">
+                                {this.state.error}
+                            </MuiAlert>
+                        </Snackbar>}
+
+
+
 
                     </div>
                 </React.Fragment>

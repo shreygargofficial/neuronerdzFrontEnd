@@ -107,7 +107,7 @@ export default class Article extends React.Component {
                                                     userMessage: {ele.userMessage}
                                             </div>
                                             {/* reply form */}
-                                            <button className="btn btn-warning" onClick={() => this.setState({ replyBtnValue: ele.commentId })}>Reply</button>
+                                            <button className="btn primary" onClick={() => this.setState({ replyBtnValue: ele.commentId })}>Reply</button>
                                             {this.state.replyBtnValue && this.state.replyBtnValue === ele.commentId && (
 
                                                 <div className="comments mt-3 ml-3">

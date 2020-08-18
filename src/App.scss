@@ -1,9 +1,21 @@
 $primary:#AF0017;
+// $primary:rgb(0,0,0);
 $secondary:#f6f6f6;
 $border-color:#d9d8d8;
 $pad-0:0px;
 $border:1px solid red;
 $heightAdminTopNavbar:20px;
+
+.MuiButton-containedPrimary{
+background-color: $primary !important;
+color: $secondary  !important;
+}
+.MuiButton-root{
+    padding:8px 14px !important;
+}
+.MuiButton-label{
+    text-transform:capitalize !important;
+}
 .text-white{
     color: #fff;
 }
@@ -75,7 +87,7 @@ $heightAdminTopNavbar:20px;
     border:none;
     border-radius: 3px; 
     padding:9px 14px;
-    color: #fff;
+    color: $secondary;
     font-size:14px;
 
 }
@@ -197,7 +209,7 @@ color:$primary;
         li{
             padding: 12px;
             padding-left: 70px;
-            color: #fff;
+            color: $secondary;
         }
         .active-admin-side-nav{
             background-color: $primary;
@@ -228,7 +240,7 @@ color:$primary;
         width: 100%;
         height: 4px;
         margin-top: 3px;
-        background-color: #fff;
+        background-color: $secondary;
        
     }
 }
@@ -295,7 +307,62 @@ color:$primary;
 .cursor{
     cursor: pointer;
 }
+.spiner_circle1 {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border-left: 20px solid red;
+    border-top: 20px solid white;
+    border-right: 20px solid orange;
+    border-bottom: 20px solid white;
+    animation: rotate 11s infinite linear;
+    position: absolute;
+    top: 47%;
+    left: 47%;
+  }
 
+  .container_spinner {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* admin post */
+  .headingBlog{
+    font-size:42px;
+  }
+
+  /* notification on editore */
+  .tox .tox-notification--warn, .tox .tox-notification--warning {
+    display: none !important;
+  }
+  @keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(3600deg)
+    }
+    ;
+  }
+ .category-tab{
+     padding:5px;
+     border:1px solid #eee;
+     margin-top:3px;
+     text-transform: capitalize;
+     text-align: center;
+ }
+ .text-capital{
+     text-transform: capitalize;
+ }
+
+ .primary{
+     background-color: $primary;
+     color:white;
+ }
+ .secondary{
+     background-color: $secondary;
+     color:#000;
+ }
 @media screen and (max-width : 400px){
     .navbar-navigations{
         margin-right: 0px;

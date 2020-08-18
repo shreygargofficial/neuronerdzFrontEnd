@@ -22,6 +22,7 @@ import AdminComment from './components/AdminComments';
 import AdminUser from './components/AdminUsers';
 import User from './components/User';
 import NotFound from './components/NotFound';
+import AdminCategory from './components/AdminCategory'
 
 
 
@@ -50,6 +51,7 @@ class App extends React.Component {
                   <Route exact path={'/admin/login'} component={Login} />
                   <Route exact path={'/admin/post'} component={AdminPost} />
                   <Route exact path={'/admin/comments'} component={AdminComment} />
+                  <Route exact path={'/admin/category'} component={AdminCategory} />
                   <Route exact path={'/admin/user'} component={AdminUser} />
                   <Route exact path={'/admin/user/:username'} component={User} />
                   <Route exact path={'/admin/*'} component={NotFound} />

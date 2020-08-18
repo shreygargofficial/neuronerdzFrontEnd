@@ -2,7 +2,6 @@ import React from 'react'
 import axios from 'axios'
 import url from './url'
 import Card from './Card'
-import NotFound from './NotFound'
 import Spinner from './Spinner'
 export default class Blog extends React.Component {
 

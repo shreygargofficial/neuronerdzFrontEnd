@@ -1,8 +1,10 @@
 import React from 'react'
 import { Redirect, Link } from 'react-router-dom'
-
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import SideNav from './sideNav';
 import Axios from 'axios';
+import Button from '@material-ui/core/Button';
 import url from './url';
 export default class AdminUsers extends React.Component {
     state = {
@@ -34,9 +36,11 @@ export default class AdminUsers extends React.Component {
             userPassword: "",
             repassword: "",
             userPhoneNumbers: ""
-        }
+        },
+        open: false
 
     }
+
     componentDidMount() {
         Axios.get(url + 'getAllUsers/').then(success => {
             this.setState({ users: success.data.data, err: "" })
@@ -150,12 +154,12 @@ export default class AdminUsers extends React.Component {
     submitHandler = (e) => {
         e.preventDefault();
         Axios.post(url + 'addUser/', this.state.userPost).then(success => {
-            this.setState({ addUserSuccessMsg: success.data.data, addUserErrorMsg: "" })
+            this.setState({ addUserSuccessMsg: success.data.data, addUserErrorMsg: "", open: true })
         }).catch(error => {
             if (error.response)
-                this.setState({ addUserSuccessMsg: "", addUserErrorMsg: error.response.data.message })
+                this.setState({ addUserSuccessMsg: "", addUserErrorMsg: error.response.data.message, open: true })
             else
-                this.setState({ addUserSuccessMsg: "", addUserErrorMsg: error.message })
+                this.setState({ addUserSuccessMsg: "", addUserErrorMsg: error.message, open: true })
 
 
         })
@@ -164,6 +168,11 @@ export default class AdminUsers extends React.Component {
     addUserButtonStatusToggeler = () => {
         this.setState({ addUserButtonStatus: !this.state.addUserButtonStatus })
     }
+
+    handleSnackbarClose = () => {
+        this.setState({ open: !this.state.open })
+    }
+
     render() {
         let userData = JSON.parse(sessionStorage.getItem("userData"))
         if (userData)
@@ -172,14 +181,15 @@ export default class AdminUsers extends React.Component {
                     <React.Fragment>
                         <SideNav location="user" />
                         <div className="container mt-10 mb-2">
-                            <button className="bt bt-primary" onClick={this.addUserButtonStatusToggeler}>
+                            <Button
+                                variant="contained" color="primary" onClick={this.addUserButtonStatusToggeler}>
                                 Add User
-                        </button>
+                            </Button>
 
                             {this.state.addUserButtonStatus && (
                                 <section className="row justify-content-center">
                                     <article className="col-md-6 col-lg-4">
-                                        <form className="form-login" onSubmit={this.submitHandler}>
+                                        <form className="form-login" >
                                             <div className="cross-sign" onClick={this.addUserButtonStatusToggeler}>x</div>
                                             <div className="form-group">
                                                 <input
@@ -249,14 +259,28 @@ export default class AdminUsers extends React.Component {
                                                 />
                                             </div>
                                             <div className="text-danger">{this.state.formErr.userPhoneNumbers}</div>
-                                            <button type="submit"
-                                                disabled={!(this.state.formValid.name && this.state.formValid.emailId && this.state.formValid.userName && this.state.formValid.userPassword && this.state.formValid.repassword && this.state.formValid.userPhoneNumbers)}
-                                                className="btn btn-warning form-control">
+                                           
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                onClick={this.submitHandler}
+                                                className="btn btn-warning form-control"
+                                                disabled={!(this.state.formValid.name && this.state.formValid.emailId && this.state.formValid.userName && this.state.formValid.userPassword && this.state.formValid.repassword && this.state.formValid.userPhoneNumbers)}>
                                                 Add
-                                          </button>
-                                            <div className="text-success">{this.state.addUserSuccessMsg}</div>
-                                            <div className="text-danger">{this.state.addUserErrorMsg}</div>
+                                            </Button>
 
+
+
+                                            <Snackbar open={this.state.open} autoHideDuration={3000} onClose={this.handleSnackbarClose} >
+                                                <MuiAlert elevation={6} variant="filled" severity="success">
+                                                    {this.state.addUserSuccessMsg}
+                                                </MuiAlert>
+                                            </Snackbar>
+                                            {this.state.addUserErrorMsg && <Snackbar open={this.state.open} autoHideDuration={3000} onClose={this.handleSnackbarClose} >
+                                                <MuiAlert  elevation={6} variant="filled" severity="error">
+                                                    {this.state.addUserErrorMsg}
+                                                </MuiAlert>
+                                            </Snackbar>}
                                         </form>
                                     </article>
                                 </section>

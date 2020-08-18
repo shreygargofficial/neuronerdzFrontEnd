@@ -43,6 +43,7 @@ export default class sideNav extends React.Component {
                                         </i>
                                     </li>}
                                 </Link>
+                                <Link to="/admin/category"><li className={(this.props.location && this.props.location === "category") ? "active-admin-side-nav" : ""}>Category</li></Link>
                                 <Link to="/"><li>Visit Site</li></Link>
 
                         </ul>
