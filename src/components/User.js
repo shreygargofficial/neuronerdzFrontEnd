@@ -1,6 +1,7 @@
 import React from 'react'
 import { Redirect } from 'react-router-dom'
-
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import SideNav from './sideNav';
 import Axios from 'axios';
 import url from './url';
@@ -17,7 +18,8 @@ export default class User extends React.Component {
         formErr: {
             name: "",
             emailId: ""
-        }
+        },
+        open: false
     }
     componentDidMount() {
         Axios.get(url + 'getUserByUserName/' + this.props.match.params.username).then(success => {
@@ -77,20 +79,23 @@ export default class User extends React.Component {
     submitHandler = (e) => {
         e.preventDefault();
         Axios.put(url + 'updateUser/' + this.props.match.params.username, this.state.users).then(success => {
-            this.setState({ users: success.data.data, updateMsgSuccess: "User Successfully Updated!!", updateMsgErr: "" })
+            this.setState({ users: success.data.data, updateMsgSuccess: "User Successfully Updated!!", updateMsgErr: "", open: true })
+
         }).catch(error => {
             if (error.response)
-                this.setState({ updateMsgSuccess: "", updateMsgErr: error.response.data.message })
+                this.setState({ updateMsgSuccess: "", updateMsgErr: error.response.data.message, open: true })
             else
-                this.setState({ updateMsgSuccess: "", updateMsgErr: error.message })
+                this.setState({ updateMsgSuccess: "", updateMsgErr: error.message, open: true })
 
 
         })
 
     }
-    deleteUser = () => {
+    deleteUser = (e) => {
+        e.preventDefault();
         Axios.delete(url + 'deleteUser/' + this.props.match.params.username).then(success => {
             this.setState({ users: "" })
+            this.props.history.push('/admin/user')
         }).catch(error => {
             if (error.response)
                 this.setState({ deletemsgErr: error.response.data.message })
@@ -99,7 +104,9 @@ export default class User extends React.Component {
         })
     }
 
-
+    handleSnackbarClose = () => {
+        this.setState({ open: false })
+    }
     render() {
         let userData = JSON.parse(sessionStorage.getItem("userData"))
         if (userData)
@@ -112,7 +119,7 @@ export default class User extends React.Component {
                                 {this.state.users && (this.state.users.userName !== userData.userName) ?
                                     (
                                         <section className="col-md-6 col-lg-4">
-                                            <form className="form-login" onSubmit={this.submitHandler}>
+                                            <form method="post" className="form-login" >
                                                 <div className="form-group">
                                                     <input
                                                         type="text"
@@ -146,25 +153,36 @@ export default class User extends React.Component {
                                                     />
                                                 </div>
                                                 <div className="form-group">
-                                                    <select name="userPermission" className="form-control" onChange={this.changeHander}>
-                                                        <option value="admin" selected={"admin" === this.state.users.userPermission}>Admin</option>
-                                                        <option value="editor" selected={"editor" === this.state.users.userPermission}>Editor</option>
-                                                        <option value="author" selected={"author" === this.state.users.userPermission}>Author</option>
-                                                        <option value="spectator" selected={"spectator" === this.state.users.userPermission}>Spectator</option>
+                                                    <select name="userPermission" value={this.state.users && this.state.users.userPermission} className="form-control" onChange={this.changeHander}>
+                                                        <option value="admin" >Admin</option>
+                                                        <option value="editor" >Editor</option>
+                                                        <option value="author" >Author</option>
+                                                        <option value="spectator">Spectator</option>
 
                                                     </select>
                                                 </div>
                                                 <button type="submit"
+                                                    onClick={this.submitHandler}
                                                     disabled={!(this.state.formValid.name && this.state.formValid.emailId)}
                                                     className="btn btn-warning form-control">
                                                     Update
-                                          </button>
-                                                {this.state.updateMsgSuccess && <div className="text-success">{this.state.updateMsgSuccess}</div>}
-                                                {this.state.updateMsgErr && <div className="text-danger">{this.state.updateMsgErr}</div>}
-                                                {!(this.state.updateMsgSuccess || this.state.updateMsgErr) && <React.Fragment>< br /> <br /></React.Fragment>}
+                                              </button>
+
+
+                                                {this.state.updateMsgSuccess && <Snackbar open={this.state.open} autoHideDuration={3000} onClose={this.handleSnackbarClose} >
+                                                    <MuiAlert onClose={this.handleSnackbarClose} elevation={6} variant="filled" severity="success">
+                                                        {this.state.updateMsgSuccess}
+                                                    </MuiAlert>
+                                                </Snackbar>}
+                                                {this.state.updateMsgErr && <Snackbar open={this.state.open} autoHideDuration={3000} onClose={this.handleSnackbarClose} >
+                                                    <MuiAlert onClose={this.handleSnackbarClose} elevation={6} variant="filled" severity="error">
+                                                        {this.state.updateMsgErr}
+                                                    </MuiAlert>
+                                                </Snackbar>}
+
                                                 <button
                                                     onClick={this.deleteUser}
-                                                    className="btn btn-danger form-control">
+                                                    className="btn btn-danger form-control mt-2">
                                                     Delete
                                              </button>
 

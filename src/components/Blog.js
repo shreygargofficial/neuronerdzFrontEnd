@@ -7,17 +7,18 @@ export default class Blog extends React.Component {
 
     state = {
         data: "",
-        err: ""
+        err: "",
+        loading:true
     }
     componentDidMount() {
         axios.get(url + "getAllblogs/").then(success => {
-            this.setState({ data: (success.data.data), err: "" })
+            this.setState({ data: (success.data.data), err: "" ,loading:false})
         }).catch(err => {
             if (err.response) {
-                this.setState({ data: "", err: err.response.data.message })
+                this.setState({ data: "", err: err.response.data.message ,loading:false})
             }
             else {
-                this.setState({ data: "", err: err.message })
+                this.setState({ data: "", err: err.message ,loading:false   })
             }
         })
     }
@@ -25,6 +26,8 @@ export default class Blog extends React.Component {
 
 
     render() {
+        if(this.state.loading)
+       return  <Spinner />
         return (
             <div>
                 {this.state.data ? <div className="row">
@@ -35,7 +38,7 @@ export default class Blog extends React.Component {
                             </React.Fragment>
                         )
                     })}
-                </div> : <Spinner />}
+                </div> :"No Blogs found"}
             </div>
         )
     }

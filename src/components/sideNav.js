@@ -2,6 +2,7 @@ import React from 'react';
 import { urlR } from './url'
 import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom'
+import MenuIcon from '@material-ui/icons/Menu';
 export default class sideNav extends React.Component {
     state = {
         collapse: true
@@ -20,11 +21,9 @@ export default class sideNav extends React.Component {
                         <div className="user-logged">
                             {userData.userName}
                         </div>
-                        <div className="humburger" onClick={this.sidenavCollapse}>
-                            <div className="bar"></div>
-                            <div className="bar"></div>
-                            <div className="bar"></div>
-                        </div>
+                     
+                        <MenuIcon className="humburger" onClick={this.sidenavCollapse}/>
+                        
                     </nav>
 
                     <aside className={"side-admin-nav " + collapseStatus}>

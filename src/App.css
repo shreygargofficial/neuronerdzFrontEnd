@@ -1,12 +1,29 @@
+html {
+  scroll-behavior: smooth; }
+
 .MuiButton-containedPrimary {
   background-color: #AF0017 !important;
   color: #f6f6f6 !important; }
 
 .MuiButton-root {
+  outline: none !important;
   padding: 8px 14px !important; }
+
+.MuiIconButton-root {
+  outline: none !important; }
+
+.MuiButton-outlinedPrimary {
+  color: #AF0017 !important;
+  border: 1px solid #AF0017 !important; }
 
 .MuiButton-label {
   text-transform: capitalize !important; }
+
+.MuiFormLabel-root.Mui-focused {
+  color: #AF0017 !important; }
+
+.reply-btn {
+  margin: 0 0 10px 10px !important; }
 
 .text-white {
   color: #fff; }
@@ -92,8 +109,8 @@ img {
   transform: scale(1.2);
   transition: 0.5s ease; }
 
-.blog-data span {
-  display: block;
+.blog-data .tags {
+  display: flex;
   margin-top: 20px;
   margin-bottom: 20px; }
 
@@ -143,8 +160,8 @@ a:hover {
   position: fixed;
   top: 0px;
   z-index: 999;
-  background-color: #000;
-  color: #AF0017; }
+  background-color: #AF0017;
+  color: #f6f6f6; }
 
 .top-admin-nav .user-logged {
   position: fixed;
@@ -165,7 +182,7 @@ a:hover {
   top: 31px;
   bottom: 0;
   height: calc(100% - 31px);
-  background-color: black; }
+  background-color: #AF0017; }
 
 .side-admin-nav .admin-menulist {
   list-style: none;
@@ -178,16 +195,28 @@ a:hover {
   color: #f6f6f6; }
 
 .side-admin-nav .admin-menulist .active-admin-side-nav {
-  background-color: #AF0017; }
+  background-color: #f6f6f6;
+  color: #AF0017; }
 
 .side-admin-nav .admin-menulist li:hover {
-  background: #AF0017;
-  cursor: pointer; }
+  background: #f6f6f6;
+  cursor: pointer;
+  color: #AF0017; }
 
 .side-admin-nav .admin-menulist .side-admin-nav-logo {
   width: 100%;
   height: 100px;
   padding: 30px 0px;
+  background-color: #AF0017;
+  text-align: center;
+  margin-bottom: 3px;
+  border-bottom: 1px solid #f6f6f6; }
+
+.side-admin-nav .admin-menulist .side-admin-nav-logo:hover {
+  width: 100%;
+  height: 100px;
+  padding: 30px 0px;
+  color: #f6f6f6;
   background-color: #AF0017;
   text-align: center;
   margin-bottom: 3px; }
@@ -245,6 +274,14 @@ a:hover {
   cursor: pointer;
   color: #fff; }
 
+.user__addicon {
+  position: fixed !important;
+  bottom: 30px;
+  right: 30px;
+  outline: none !important;
+  color: #f6f6f6 !important;
+  background-color: #AF0017 !important; }
+
 .cross-sign {
   float: right;
   position: absolute;
@@ -253,12 +290,6 @@ a:hover {
   color: #AF0017;
   padding: 0px 8px;
   cursor: pointer; }
-
-.user-comment {
-  border: 1px solid #AF0017;
-  padding: 10px;
-  height: 100px;
-  overflow-y: auto; }
 
 .cursor {
   cursor: pointer; }
@@ -281,8 +312,10 @@ a:hover {
   text-align: center; }
 
 /* admin post */
-.headingBlog {
-  font-size: 42px; }
+.heading-post input {
+  font-weight: bold;
+  font-size: 68px;
+  padding: 6px 14px; }
 
 /* notification on editore */
 .tox .tox-notification--warn, .tox .tox-notification--warning {
@@ -295,11 +328,22 @@ a:hover {
     transform: rotate(3600deg); } }
 
 .category-tab {
+  display: flex;
   padding: 5px;
   border: 1px solid #eee;
   margin-top: 3px;
-  text-transform: capitalize;
-  text-align: center; }
+  text-transform: capitalize; }
+
+.category-tab .category_text {
+  flex: 10; }
+
+.category-tab .MuiSvgIcon-colorPrimary {
+  color: #AF0017; }
+
+.category-tab .delete__icon, .category-tab .update__icon {
+  color: #AF0017 !important;
+  flex: 0.5;
+  cursor: pointer; }
 
 .text-capital {
   text-transform: capitalize; }
@@ -311,6 +355,25 @@ a:hover {
 .secondary {
   background-color: #f6f6f6;
   color: #000; }
+
+.comments-auther {
+  display: flex;
+  align-items: center; }
+
+.comments-auther h4 {
+  padding-left: 10px; }
+
+.comment-thread {
+  padding: 20px !important; }
+
+.user-comment {
+  border: 1px solid #AF0017;
+  padding: 10px;
+  height: 100px;
+  overflow-y: auto; }
+
+.comments_body {
+  margin-top: 25px !important; }
 
 @media screen and (max-width: 400px) {
   .navbar-navigations {

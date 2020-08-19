@@ -5,7 +5,10 @@ import MuiAlert from '@material-ui/lab/Alert';
 import SideNav from './sideNav';
 import Axios from 'axios';
 import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
+import { IconButton } from '@material-ui/core/';
 import url from './url';
+import Spinner from './Spinner';
 export default class AdminUsers extends React.Component {
     state = {
         users: "",
@@ -19,6 +22,7 @@ export default class AdminUsers extends React.Component {
             emailId: "",
             userPassword: "",
             repassword: "",
+            userPermission: "editor",
             userPhoneNumbers: ""
         },
         formValid: {
@@ -37,20 +41,23 @@ export default class AdminUsers extends React.Component {
             repassword: "",
             userPhoneNumbers: ""
         },
-        open: false
+        open: false,
+        loading: true
 
     }
 
     componentDidMount() {
+
         Axios.get(url + 'getAllUsers/').then(success => {
-            this.setState({ users: success.data.data, err: "" })
+            this.setState({ users: success.data.data, err: "", loading: false })
         }).catch(error => {
             if (error.response)
-                this.setState({ users: "", err: error.response.data.message })
+                this.setState({ users: "", err: error.response.data.message, loading: false })
             else
-                this.setState({ users: "", err: error.message })
+                this.setState({ users: "", err: error.message, loading: false })
 
         })
+
     }
     changeHander = (e) => {
         let userPost = this.state.userPost;
@@ -153,13 +160,15 @@ export default class AdminUsers extends React.Component {
     }
     submitHandler = (e) => {
         e.preventDefault();
+        this.setState({ loading: true })
         Axios.post(url + 'addUser/', this.state.userPost).then(success => {
-            this.setState({ addUserSuccessMsg: success.data.data, addUserErrorMsg: "", open: true })
+            this.setState({ addUserSuccessMsg: success.data.data, addUserErrorMsg: "", open: true, addUserButtonStatus: false, loading: false })
+            this.componentDidMount()
         }).catch(error => {
             if (error.response)
-                this.setState({ addUserSuccessMsg: "", addUserErrorMsg: error.response.data.message, open: true })
+                this.setState({ addUserSuccessMsg: "", addUserErrorMsg: error.response.data.message, open: true, loading: false })
             else
-                this.setState({ addUserSuccessMsg: "", addUserErrorMsg: error.message, open: true })
+                this.setState({ addUserSuccessMsg: "", addUserErrorMsg: error.message, open: true, loading: false })
 
 
         })
@@ -170,22 +179,34 @@ export default class AdminUsers extends React.Component {
     }
 
     handleSnackbarClose = () => {
-        this.setState({ open: !this.state.open })
+        this.setState({ open: false })
+    }
+    handleSnackbarClose2 = () => {
+        this.setState({ open: false })
     }
 
     render() {
+        if (this.state.loading)
+            return (
+                <Spinner />
+            )
+
         let userData = JSON.parse(sessionStorage.getItem("userData"))
         if (userData)
             if (userData.userPermission === "admin")
                 return (
                     <React.Fragment>
+
+
+
                         <SideNav location="user" />
                         <div className="container mt-10 mb-2">
-                            <Button
-                                variant="contained" color="primary" onClick={this.addUserButtonStatusToggeler}>
-                                Add User
-                            </Button>
-
+                            <IconButton className="user__addicon" href="#" onClick={this.addUserButtonStatusToggeler}>
+                                <AddIcon />
+                            </IconButton>
+                         
+                            <br />
+                            {/* This is user adding form */}
                             {this.state.addUserButtonStatus && (
                                 <section className="row justify-content-center">
                                     <article className="col-md-6 col-lg-4">
@@ -247,6 +268,19 @@ export default class AdminUsers extends React.Component {
                                                     onChange={this.changeHander}
                                                 />
                                             </div>
+                                            <div className="form-group">
+                                                <select
+                                                    className="form-control"
+                                                    value={this.state.userPost.userPermission}
+                                                    name="userPermission"
+                                                    onChange={this.changeHander}>
+                                                    <option value="admin">Admin</option>
+                                                    <option value="editor">Editor</option>
+                                                    <option value="author">Author</option>
+                                                    <option value="spectator">Spectator</option>
+
+                                                </select>
+                                            </div>
                                             <div className="text-danger">{this.state.formErr.repassword}</div>
                                             <div className="form-group">
                                                 <input
@@ -259,7 +293,7 @@ export default class AdminUsers extends React.Component {
                                                 />
                                             </div>
                                             <div className="text-danger">{this.state.formErr.userPhoneNumbers}</div>
-                                           
+
                                             <Button
                                                 variant="contained"
                                                 color="primary"
@@ -272,21 +306,22 @@ export default class AdminUsers extends React.Component {
 
 
                                             <Snackbar open={this.state.open} autoHideDuration={3000} onClose={this.handleSnackbarClose} >
-                                                <MuiAlert elevation={6} variant="filled" severity="success">
+                                                <MuiAlert onClose={this.handleSnackbarClose2} elevation={6} variant="filled" severity="success">
                                                     {this.state.addUserSuccessMsg}
                                                 </MuiAlert>
                                             </Snackbar>
                                             {this.state.addUserErrorMsg && <Snackbar open={this.state.open} autoHideDuration={3000} onClose={this.handleSnackbarClose} >
-                                                <MuiAlert  elevation={6} variant="filled" severity="error">
+                                                <MuiAlert onClose={this.handleSnackbarClose2} elevation={6} variant="filled" severity="error">
                                                     {this.state.addUserErrorMsg}
                                                 </MuiAlert>
                                             </Snackbar>}
                                         </form>
                                     </article>
                                 </section>
-
                             )}
+                            {/* User Adding form over */}
 
+                            {/* Displaying User Start */}
                             <br /><br />
                             {this.state.users && (
                                 <div className="row break-word">
@@ -312,16 +347,16 @@ export default class AdminUsers extends React.Component {
                                     <Link key={key} to={'/admin/user/' + user.userName}>
                                         {(userData.userName !== user.userName) &&
                                             <div className="row user-row break-word" >
-                                                <div className="col-3">
+                                                <div className="col-sm-3">
                                                     {user.userName}
                                                 </div>
-                                                <div className="col-3">
+                                                <div className="col-sm-3">
                                                     {user.emailId}
                                                 </div>
-                                                <div className="col-3">
+                                                <div className="col-sm-3">
                                                     {user.name}
                                                 </div>
-                                                <div className="col-3">
+                                                <div className="col-sm-3">
                                                     {user.userPermission}
                                                 </div>
                                             </div>

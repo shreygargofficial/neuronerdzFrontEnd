@@ -5,16 +5,32 @@ $border-color:#d9d8d8;
 $pad-0:0px;
 $border:1px solid red;
 $heightAdminTopNavbar:20px;
-
+html{
+    scroll-behavior: smooth;
+}
 .MuiButton-containedPrimary{
 background-color: $primary !important;
 color: $secondary  !important;
 }
 .MuiButton-root{
+    outline:none !important;
     padding:8px 14px !important;
+}
+.MuiIconButton-root{
+    outline:none !important;
+}
+.MuiButton-outlinedPrimary{
+    color:$primary !important;
+    border: 1px solid $primary !important;
 }
 .MuiButton-label{
     text-transform:capitalize !important;
+}
+.MuiFormLabel-root.Mui-focused{
+    color:$primary !important;
+}
+.reply-btn{
+    margin:0 0 10px 10px !important;
 }
 .text-white{
     color: #fff;
@@ -117,12 +133,12 @@ img{
 }
 
 .blog-data{
-    span{
-        display: block;
+    .tags{
+        display: flex;
         margin-top: 20px;
         margin-bottom: 20px;
-
     }
+  
     img{
         margin-top: 15px;
         margin-bottom: 15px;
@@ -179,8 +195,8 @@ padding: 4px;
 position: fixed;
 top:0px;
 z-index: 999;
-background-color:#000;
-color:$primary;
+background-color:$primary;
+color:$secondary;
 .user-logged{
     position: fixed;
     right: 40px;
@@ -201,7 +217,7 @@ color:$primary;
     top:31px;
     bottom: 0;
     height: calc(100% - 31px);
-    background-color: black;
+    background-color: $primary;
     .admin-menulist{
         list-style: none;
         width:100%;
@@ -212,16 +228,28 @@ color:$primary;
             color: $secondary;
         }
         .active-admin-side-nav{
-            background-color: $primary;
+            background-color: $secondary;
+            color: $primary;
             }
         li:hover{
-            background: $primary;
+            background: $secondary;
             cursor: pointer;
+            color: $primary;
         }
         .side-admin-nav-logo{
             width: 100%;
             height: 100px;
             padding:30px 0px;
+            background-color: $primary;
+            text-align: center;
+            margin-bottom: 3px;
+            border-bottom:1px solid $secondary;
+        }
+        .side-admin-nav-logo:hover{
+            width: 100%;
+            height: 100px;
+            padding:30px 0px;
+            color: $secondary;
             background-color: $primary;
             text-align: center;
             margin-bottom: 3px;
@@ -287,7 +315,14 @@ color:$primary;
     cursor: pointer;
     color:#fff;
 }
-
+.user__addicon{
+    position: fixed !important;
+    bottom:30px;
+    right: 30px;
+    outline:none !important;
+    color:$secondary !important;
+    background-color: $primary !important;
+}
 .cross-sign{
     float: right;
     position: absolute;
@@ -298,12 +333,7 @@ color:$primary;
     padding: 0px 8px;
     cursor: pointer;
 }
-.user-comment{
-    border:1px solid $primary;
-    padding: 10px;
-    height:100px;
-    overflow-y: auto;
-}
+
 .cursor{
     cursor: pointer;
 }
@@ -327,8 +357,11 @@ color:$primary;
   }
 
   /* admin post */
-  .headingBlog{
-    font-size:42px;
+  .heading-post input{
+    font-weight: bold;
+    font-size: 68px;
+    padding: 6px 14px;
+
   }
 
   /* notification on editore */
@@ -345,11 +378,23 @@ color:$primary;
     ;
   }
  .category-tab{
+     display: flex;
      padding:5px;
      border:1px solid #eee;
      margin-top:3px;
      text-transform: capitalize;
-     text-align: center;
+     .category_text{
+         flex: 10;
+     }
+     .MuiSvgIcon-colorPrimary {
+        color: $primary;
+        
+    }
+     .delete__icon,.update__icon {
+         color:$primary !important;
+         flex: 0.5;
+         cursor: pointer;
+     }
  }
  .text-capital{
      text-transform: capitalize;
@@ -363,6 +408,28 @@ color:$primary;
      background-color: $secondary;
      color:#000;
  }
+ //comment related
+ .comments-auther{
+     display: flex;
+     align-items: center;
+    
+     h4{
+         padding-left: 10px;
+     }
+ }
+ .comment-thread{
+     padding:20px !important;
+ }
+ .user-comment{
+    border:1px solid $primary;
+    padding: 10px;
+    height:100px;
+    overflow-y: auto;
+}
+.comments_body {
+    margin-top: 25px !important;
+}
+
 @media screen and (max-width : 400px){
     .navbar-navigations{
         margin-right: 0px;
